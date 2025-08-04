@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shield and Castle Travel Agency</title>
 
-  <!-- Disney-style font (Waltograph) -->
+  <!-- Disney-style font -->
   <link href="https://fonts.cdnfonts.com/css/waltograph" rel="stylesheet">
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: 'Waltograph', cursive;
@@ -19,8 +23,9 @@
     header {
       background: #004085;
       color: white;
-      padding: 1rem;
       text-align: center;
+      padding: 1rem;
+      animation: slideDown 1.5s ease;
     }
 
     nav a {
@@ -32,38 +37,48 @@
     }
 
     .hero {
-      background: url('https://lumiere-a.akamaihd.net/v1/images/wdw-hero_6c9dd95d.jpeg') center/cover no-repeat;
-      color: black;
+      background: url('https://cdn1.parksmedia.wdprapps.disney.com/media/blog/wp-content/uploads/2022/01/04021889fi-1024x576.jpg') center/cover no-repeat;
+      color: white;
       text-align: center;
       padding: 6rem 1rem;
+      text-shadow: 2px 2px 6px #000;
+      animation: fadeIn 2s ease-in;
     }
 
     .hero h1 {
       font-size: 3rem;
-      text-shadow: 2px 2px 5px black;
+      margin-bottom: 1rem;
+      animation: bounce 1.5s ease-in-out infinite alternate;
     }
 
     .section {
       padding: 2rem 1rem;
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
       font-family: Arial, sans-serif;
     }
 
-    .services {
+    .services, .photos {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1rem;
       justify-content: center;
     }
 
-    .service {
+    .service, .photo {
       background: #ffffff;
       padding: 1rem;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      flex: 1 1 250px;
+      flex: 1 1 280px;
       max-width: 300px;
+      text-align: center;
+    }
+
+    .photo img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     footer {
@@ -84,6 +99,22 @@
         font-size: 2rem;
       }
     }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-15px); }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -92,6 +123,7 @@
     <h2>Shield and Castle Travel Agency</h2>
     <nav>
       <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -99,36 +131,51 @@
 
   <section class="hero">
     <h1>Your Dream Disney Vacation Starts Here</h1>
-    <p>Planning Disney magic has never been easier!</p>
+    <p>Let the magic begin — we'll take care of everything!</p>
   </section>
 
   <section id="services" class="section">
-    <h2>Our Services</h2>
+    <h2>✨ Our Services</h2>
     <div class="services">
       <div class="service">
         <h3>Custom Itineraries</h3>
-        <p>We build your day-to-day plans around your family’s wishes, including Genie+ and Lightning Lane tips.</p>
+        <p>Personalized park plans including Genie+, Lightning Lane, and more.</p>
       </div>
       <div class="service">
         <h3>Resort Booking</h3>
-        <p>Stay at Disney World resorts with expert help choosing the best location and deals.</p>
+        <p>We'll help you find the perfect Disney resort based on your budget and vibe.</p>
       </div>
       <div class="service">
         <h3>Dining Reservations</h3>
-        <p>We snag hard-to-get dining like Cinderella’s Royal Table or Space 220 so you don’t have to!</p>
+        <p>From Cinderella’s Royal Table to space-themed dining — we’ll book it all.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="section">
+    <h2>🏰 Magical Moments</h2>
+    <div class="photos">
+      <div class="photo">
+        <img src="https://cdn1.parksmedia.wdprapps.disney.com/media/blog/wp-content/uploads/2020/01/b1d2d809-300x169.jpg" alt="Castle at night">
+      </div>
+      <div class="photo">
+        <img src="https://cdn1.parksmedia.wdprapps.disney.com/media/blog/wp-content/uploads/2023/05/MK-Character-Greeting-300x169.jpg" alt="Disney character greeting">
+      </div>
+      <div class="photo">
+        <img src="https://cdn1.parksmedia.wdprapps.disney.com/media/blog/wp-content/uploads/2022/03/disney-parks-entrance-300x169.jpg" alt="Disney entrance">
       </div>
     </div>
   </section>
 
   <section id="about" class="section">
-    <h2>About Us</h2>
-    <p>Hi! I’m a Disney-certified travel planner passionate about making your vacation stress-free and magical. Our services are 100% free — we’re paid by Disney so you don’t pay extra!</p>
+    <h2>🌟 About Us</h2>
+    <p>We're Disney-certified travel experts who make planning your vacation easy, magical, and fun! Our concierge-level planning is free — because Disney pays us, not you.</p>
   </section>
 
   <section id="contact" class="section">
-    <h2>Contact</h2>
+    <h2>📩 Contact</h2>
     <p>Email us: <a href="mailto:anthonybia91@yahoo.com">anthonybia91@yahoo.com</a></p>
-    <p><a href="https://www.disneytravelcenter.com/ms437fbce4/" target="_blank">Visit My Official Disney Travel Page</a></p>
+    <p>Book directly: <a href="https://www.disneytravelcenter.com/ms437fbce4/" target="_blank">Official Disney Travel Site</a></p>
   </section>
 
   <footer>
