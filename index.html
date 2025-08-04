@@ -37,7 +37,7 @@
     }
 
     .hero {
-  background: url('castle.jpg') center/cover no-repeat;
+      background: url('castle.jpg') center/cover no-repeat;
       color: white;
       text-align: center;
       padding: 6rem 1rem;
@@ -58,21 +58,48 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Polaroid style for services */
     .services {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
       justify-content: center;
     }
 
     .service {
-      background: #ffffff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      flex: 1 1 280px;
-      max-width: 300px;
+      background: white;
+      width: 250px;
+      padding: 1rem 1rem 2.5rem;
+      border: 10px solid white;
+      box-shadow: 0 8px 12px rgba(0,0,0,0.25);
       text-align: center;
+      font-family: Arial, sans-serif;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .service:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 18px rgba(0,0,0,0.35);
+    }
+
+    .service img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      margin-bottom: 0.75rem;
+      border: 4px solid white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    }
+
+    .service h3 {
+      margin: 0.5rem 0 0.25rem;
+      font-weight: bold;
+    }
+
+    .service p {
+      font-size: 0.9rem;
+      color: #555;
     }
 
     footer {
@@ -131,16 +158,24 @@
     <h2>✨ Our Services</h2>
     <div class="services">
       <div class="service">
+        <img src="your-image1.jpg" alt="Custom Itineraries" />
         <h3>Custom Itineraries</h3>
         <p>Personalized park plans including Genie+, Lightning Lane, and more.</p>
       </div>
       <div class="service">
+        <img src="your-image2.jpg" alt="Resort Booking" />
         <h3>Resort Booking</h3>
         <p>We'll help you find the perfect Disney resort based on your budget and vibe.</p>
       </div>
       <div class="service">
+        <img src="your-image3.jpg" alt="Dining Reservations" />
         <h3>Dining Reservations</h3>
         <p>From Cinderella’s Royal Table to space-themed dining — we’ll book it all.</p>
+      </div>
+      <div class="service">
+        <img src="your-image4.jpg" alt="FastPass Planning" />
+        <h3>FastPass Planning</h3>
+        <p>Maximize your ride time and skip long lines with expert FastPass scheduling.</p>
       </div>
     </div>
   </section>
