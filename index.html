@@ -52,11 +52,8 @@
     }
 
     nav {
-      margin-left: auto;
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
+  margin-left: auto;
+  position: relative; /* changed from absolute */
     }
 
     nav a {
@@ -89,16 +86,16 @@
     }
 
     .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 160px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      z-index: 100;
-      border-radius: 4px;
-      overflow: hidden;
-      right: 0;
-    }
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 9999; /* increased from 100 */
+  border-radius: 4px;
+  overflow: hidden;
+  right: 0;
+}
 
     .dropdown-content a {
       color: var(--primary-color);
