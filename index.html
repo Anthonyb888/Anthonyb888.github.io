@@ -27,7 +27,6 @@
       color: white;
       padding: 1rem;
       font-family: 'Waltograph', cursive;
-
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
@@ -37,20 +36,12 @@
     .logo {
       height: 40px;
       width: auto;
-      display: block;
-      position: static; /* removed absolute */
     }
 
     header h2 {
       margin: 0;
       font-size: 2rem;
       text-align: center;
-      justify-self: center; /* center in middle column */
-    }
-
-    nav {
-      margin-left: 0;
-      position: static;
     }
 
     nav a {
@@ -61,7 +52,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Dropdown menu styling */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -74,13 +64,10 @@
       font-size: 16px;
       border: none;
       cursor: pointer;
-      font-family: Arial, sans-serif;
       font-weight: bold;
     }
 
-    .dropbtn:hover {
-      background-color: var(--primary-dark);
-    }
+    .dropbtn:hover { background-color: var(--primary-dark); }
 
     .dropdown-content {
       display: none;
@@ -99,20 +86,15 @@
       padding: 12px 16px;
       text-decoration: none;
       display: block;
-      font-family: Arial, sans-serif;
     }
 
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
+    .dropdown-content a:hover { background-color: #f1f1f1; }
+    .dropdown:hover .dropdown-content { display: block; }
 
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
+    /* Parallax Hero */
     .hero {
       position: relative;
-      background: url('castle.jpg') center/cover no-repeat;
+      background: url('castle.jpg') center/cover no-repeat fixed;
       padding: 6rem 1rem;
       color: white;
       text-align: center;
@@ -121,7 +103,6 @@
       font-family: 'Waltograph', cursive;
     }
 
-    /* Overlay for text clarity */
     .hero::before {
       content: "";
       position: absolute;
@@ -130,8 +111,7 @@
       z-index: 0;
     }
 
-    .hero h1,
-    .hero p {
+    .hero h1, .hero p {
       position: relative;
       z-index: 2;
       margin: 0;
@@ -143,78 +123,18 @@
       animation: bounce 1.5s ease-in-out infinite alternate;
     }
 
-    /* Sparkles container */
-    .sparkles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: visible;
-    }
-
-    /* Each sparkle */
-    .sparkle {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      opacity: 0.9;
-      animation: fall 6s linear infinite, twinkle 1.5s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 2px);
-    }
-
-    /* Different sparkle colors */
-    .sparkle.gold {
-      background: var(--accent-color);
-      filter: drop-shadow(0 0 6px var(--accent-color));
-    }
-
-    .sparkle.pink {
-      background: #f49ac2;
-      filter: drop-shadow(0 0 6px #f49ac2);
-    }
-
-    .sparkle.blue {
-      background: #78c3ff;
-      filter: drop-shadow(0 0 6px #78c3ff);
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-      }
-      100% {
-        transform: translateY(100vh);
-      }
-    }
-
-    @keyframes twinkle {
-      0% {
-        opacity: 0.9;
-      }
-      100% {
-        opacity: 0.3;
-      }
-    }
-
     @keyframes bounce {
-      0% {
-        transform: translateY(0);
-      }
-      100% {
-        transform: translateY(-15px);
-      }
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-15px); }
     }
 
-    /* Section styling */
+    /* Services */
     .section {
       max-width: 1000px;
       margin: auto;
       padding: 2rem 1rem;
-      font-family: Arial, sans-serif;
     }
 
-    /* Services layout */
     .services {
       display: flex;
       flex-wrap: wrap;
@@ -226,58 +146,61 @@
       background: white;
       width: 250px;
       padding: 1rem 1rem 2.5rem;
-      border: 10px solid white;
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.25);
       text-align: center;
-      font-family: Arial, sans-serif;
       position: relative;
       transition: transform 0.3s ease;
     }
 
-    .service:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.35);
+    .service:hover { transform: scale(1.05); }
+
+    .service-icon img {
+      width: 40px;
+      animation: bounceIcon 1.5s infinite ease-in-out alternate;
+    }
+
+    @keyframes bounceIcon {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
     }
 
     .service img {
       width: 100%;
       height: auto;
-      object-fit: cover;
       margin-bottom: 0.75rem;
-      border: 4px solid white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
     }
 
-    .service h3 {
-      margin: 0.5rem 0 0.25rem;
-      font-weight: bold;
+    /* Park Map Modal */
+    .map-thumb {
+      width: 200px;
+      cursor: pointer;
+      border: 3px solid white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    .service p {
-      font-size: 0.9rem;
-      color: #555;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 50px;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.9);
     }
 
-    /* Get a Quote Button Section */
-    #get-quote {
-      text-align: center;
-      margin: 2rem 0;
+    .modal-content {
+      display: block;
+      margin: auto;
+      max-width: 80%;
     }
 
-    .quote-button {
-      background-color: var(--primary-color);
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
       color: white;
-      padding: 1rem 2rem;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      font-family: Arial, sans-serif;
-      display: inline-block;
-      transition: background-color 0.3s ease;
-    }
-
-    .quote-button:hover {
-      background-color: var(--primary-dark);
+      font-size: 40px;
+      cursor: pointer;
     }
 
     footer {
@@ -285,83 +208,6 @@
       color: white;
       text-align: center;
       padding: 1rem;
-      font-family: Arial, sans-serif;
-    }
-
-    a {
-      color: var(--primary-color);
-      text-decoration: underline;
-    }
-
-    /* Carousel styles */
-    .carousel {
-      position: relative;
-      max-width: 1000px;
-      margin: 2rem auto;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-    }
-
-    .carousel-images {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      width: 100%;
-    }
-
-    .carousel-images img {
-      width: 100%;
-      flex-shrink: 0;
-      object-fit: cover;
-      height: 300px;
-    }
-
-    /* Navigation arrows */
-    .carousel-nav {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .carousel-nav button {
-      background: rgba(0,0,0,0.4);
-      border: none;
-      color: white;
-      font-size: 2rem;
-      padding: 0 12px;
-      cursor: pointer;
-      pointer-events: all;
-      border-radius: 50%;
-      user-select: none;
-      transition: background 0.3s ease;
-    }
-
-    .carousel-nav button:hover {
-      background: rgba(0,0,0,0.7);
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      header {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 0.5rem;
-      }
-      nav {
-        margin-top: 0.5rem;
-      }
-      .logo {
-        margin: 0 auto;
-      }
-      .carousel-images img {
-        height: 200px;
-      }
     }
   </style>
 </head>
@@ -377,133 +223,75 @@
           <a href="#services">Services</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
-          <a href="#downloads">Downloads</a>
+          <a href="#park-map">Park Map</a>
         </div>
       </div>
     </nav>
   </header>
 
   <section class="hero">
-    <div class="sparkles">
-      <!-- Gold sparkles -->
-      <div class="sparkle gold" style="left: 10%; animation-delay: 0s;"></div>
-      <div class="sparkle gold" style="left: 40%; animation-delay: 1.5s;"></div>
-      <div class="sparkle gold" style="left: 70%; animation-delay: 3s;"></div>
-      <!-- Pink sparkles -->
-      <div class="sparkle pink" style="left: 20%; animation-delay: 0.7s;"></div>
-      <div class="sparkle pink" style="left: 50%; animation-delay: 2.2s;"></div>
-      <div class="sparkle pink" style="left: 80%; animation-delay: 4s;"></div>
-      <!-- Blue sparkles -->
-      <div class="sparkle blue" style="left: 30%; animation-delay: 1.1s;"></div>
-      <div class="sparkle blue" style="left: 60%; animation-delay: 2.7s;"></div>
-      <div class="sparkle blue" style="left: 90%; animation-delay: 4.5s;"></div>
-    </div>
-
     <h1>Your Dream Disney Vacation Starts Here</h1>
     <p>Let the magic begin — we'll take care of everything!</p>
-  </section>
-
-  <!-- Photo Carousel -->
-  <section class="carousel" aria-label="Disney Vacation Photos">
-    <div class="carousel-images" id="carouselImages">
-      <img src="carousel1.jpg" alt="Disney Castle at sunset" />
-      <img src="fireworks.jpg" alt="Disney fireworks over park" />
-      <img src="cruise.jpg" alt="Disney Cruise ship at sea" />
-      <img src="resort3.jpg" alt="Disney Resort pool and palm trees" />
-    </div>
-    <div class="carousel-nav">
-      <button id="prevBtn" aria-label="Previous Slide">&#10094;</button>
-      <button id="nextBtn" aria-label="Next Slide">&#10095;</button>
-    </div>
   </section>
 
   <section id="services" class="section">
     <h2>✨ Services</h2>
     <div class="services">
       <div class="service">
+        <div class="service-icon"><img src="mickey-icon.png" alt=""></div>
         <img src="custom-itinerary.jpg" alt="Custom Itineraries" />
         <h3>Custom Itineraries</h3>
         <p>Personalized park plans including Genie+, Lightning Lane, and more.</p>
       </div>
       <div class="service">
+        <div class="service-icon"><img src="castle-icon.png" alt=""></div>
         <img src="resort.jpg" alt="Resort Booking" />
         <h3>Resort Booking</h3>
         <p>We'll help you find the perfect Disney resort based on your budget and vibe.</p>
       </div>
       <div class="service">
+        <div class="service-icon"><img src="cruise-icon.png" alt=""></div>
         <img src="Disney-Cruise.jpg" alt="Disney Cruise" />
         <h3>Disney Cruise Line Bookings</h3>
         <p>Planning cruises that fit your desired destinations, dates, and budget.</p>
       </div>
-      <div class="service">
-        <img src="Disney-Tips.jpg" alt="Disney Tips" />
-        <h3>Exclusive Tips & Insider Advice</h3>
-        <p>Park strategies, best times to visit rides, hidden gems, and photo spots.</p>
-      </div>
-      <div class="service">
-        <img src="dining.jpg" alt="Dining Reservations" />
-        <h3>Dining Reservations</h3>
-        <p>We’ll secure your table at Disney’s most popular restaurants before they fill up.</p>
-      </div>
-      <div class="service">
-        <img src="All-inclusive.jpg" alt="All Inclusive" />
-        <h3>All Inclusive Booking</h3>
-        <p>One booking, endless magic — all meals, drinks, and fun included.</p>
-      </div>
     </div>
   </section>
 
-  <section id="about" class="section">
-    <h2>🌟 About Me</h2>
-    <p>We're Disney-certified travel experts who make planning your vacation easy, magical, and fun! Our concierge-level planning is free — because Disney pays me, not you.</p>
+  <section id="park-map" class="section">
+    <h2>🗺 Park Map</h2>
+    <img src="park-map-thumb.jpg" alt="Disney Park Map" class="map-thumb" id="mapThumb" />
   </section>
 
-  <!-- Get a Quote Button -->
-  <section id="get-quote" class="section">
-    <a href="quote.html" class="quote-button">Get a Quote</a>
-  </section>
-
-  <section id="contact" class="section">
-    <h2>📩 Contact</h2>
-    <p>Email: <a href="mailto:anthonybia91@yahoo.com">anthonybia91@yahoo.com</a></p>
-    <p>Book directly: <a href="https://www.disneytravelcenter.com/ms437fbce4/" target="_blank" rel="noopener noreferrer">Official Disney Travel Site</a></p>
-  </section>
+  <div id="mapModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="mapFull">
+  </div>
 
   <footer>
     <p>&copy; 2025 Shield and Castle Travel Agency | Not affiliated with The Walt Disney Company</p>
   </footer>
 
   <script>
-    const carouselImages = document.getElementById('carouselImages');
-    const images = carouselImages.querySelectorAll('img');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+    // Park Map Modal Script
+    const mapThumb = document.getElementById('mapThumb');
+    const mapModal = document.getElementById('mapModal');
+    const mapFull = document.getElementById('mapFull');
+    const closeBtn = document.querySelector('.close');
 
-    let index = 0;
-
-    function showSlide(i) {
-      if(i < 0) {
-        index = images.length - 1;
-      } else if(i >= images.length) {
-        index = 0;
-      } else {
-        index = i;
-      }
-      carouselImages.style.transform = `translateX(${-index * 100}%)`;
+    mapThumb.onclick = function() {
+      mapModal.style.display = "block";
+      mapFull.src = "park-map-full.jpg";
     }
-
-    prevBtn.addEventListener('click', () => {
-      showSlide(index - 1);
-    });
-
-    nextBtn.addEventListener('click', () => {
-      showSlide(index + 1);
-    });
-
-    // Auto-slide every 5 seconds
-    setInterval(() => {
-      showSlide(index + 1);
-    }, 5000);
+    closeBtn.onclick = function() {
+      mapModal.style.display = "none";
+    }
+    window.onclick = function(e) {
+      if (e.target == mapModal) {
+        mapModal.style.display = "none";
+      }
+    }
   </script>
+
 </body>
 </html>
