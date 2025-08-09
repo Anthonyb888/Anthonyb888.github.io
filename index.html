@@ -26,9 +26,14 @@
       color: #333;
     }
 
-    h2, h3 {
+    /* Make all main titles the same style and size */
+    h1, h2, h3 {
       font-family: 'Mouse Memoirs', cursive;
       font-weight: bold;
+      font-size: 3rem; /* adjust size as needed */
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #004085; /* Optional: consistent color for headings */
     }
 
     .page-wrapper {
@@ -67,6 +72,7 @@
       text-align: center;
       margin: 0;
       line-height: 1.2;
+      color: white; /* override global h2 color for sidebar */
     }
 
     nav {
@@ -175,8 +181,6 @@
     }
 
     .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
       animation: bounce 1.5s ease-in-out infinite alternate;
     }
 
@@ -301,6 +305,7 @@
     .service h3 {
       margin: 0.5rem 0 0.25rem;
       font-weight: bold;
+      font-size: 3rem; /* match all headings */
     }
 
     .service p {
@@ -436,6 +441,7 @@
         flex-grow: 1;
         margin-left: 1rem;
         align-self: center;
+        color: white; /* keep sidebar heading white on mobile */
       }
 
       nav {
