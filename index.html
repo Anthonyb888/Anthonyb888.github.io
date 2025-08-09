@@ -28,14 +28,19 @@
 
     /* Make all main titles the same style and size */
     h1, h2, h3 {
-      font-family: 'Mouse Memoirs', cursive;
-      font-weight: bold;
-      font-size: 3rem; /* adjust size as needed */
-      margin-bottom: 1rem;
-      text-align: center;
-      color: black; /* changed to black */
-    }
+  font-family: 'Mouse Memoirs', cursive;
+  font-weight: bold;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: black; /* default color for all headings */
+}
 
+/* Specific white heading */
+.white-heading {
+  color: white !important;
+}
+    
     .page-wrapper {
       display: flex;
       min-height: 100vh;
@@ -513,6 +518,8 @@
 
     <main>
       <section class="hero">
+        <h1 class="white-heading">Your Dream Disney Vacation Starts Here</h1>
+        <p>We'll help you find the perfect Disney resort based on your budget and vibe...</p>
         <div class="sparkles">
           <!-- Gold sparkles -->
           <div class="sparkle gold" style="left: 10%; animation-delay: 0s;"></div>
