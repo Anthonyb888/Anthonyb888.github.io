@@ -36,13 +36,14 @@
       margin-bottom: 0.5rem;
       font-weight: bold;
     }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 0.75rem;
       margin-bottom: 1.5rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 1rem;
+      box-sizing: border-box;
     }
     textarea {
       resize: vertical;
@@ -70,6 +71,9 @@
       text-decoration: underline;
       font-weight: bold;
     }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -87,6 +91,47 @@
 
   <label for="phone">Phone Number</label>
   <input type="tel" id="phone" name="phone" />
+
+  <div class="form-group">
+    <label for="destination">Preferred Destination *</label>
+    <select id="destination" name="destination" required>
+      <option value="walt_disney_world">Walt Disney World - Florida</option>
+      <option value="disneyland">Disneyland - California</option>
+      <option value="disney_cruise">Disney Cruise Line</option>
+      <option value="adventures_by_disney">Adventures by Disney</option>
+      <option value="aulani">Aulani, A Disney Resort and Spa - Hawaii</option>
+      <option value="sandals">Sandals All-Inclusive Resort</option>
+      <option value="beaches">Beaches All-Inclusive Family Resort</option>
+      <option value="universal_orlando">Universal Orlando Resort</option>
+      <option value="universal_hollywood">Universal Hollywood - California</option>
+      <option value="royal_caribbean">Royal Caribbean Cruise Line</option>
+      <option value="carnival">Carnival Cruise Line</option>
+      <option value="norwegian">Norwegian Cruise Line</option>
+      <option value="virgin_voyages">Virgin Voyages</option>
+      <option value="princess_cruise">Princess Cruise Line</option>
+      <option value="viking_cruise">Viking Cruises</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="travelers">Number of Travelers *</label>
+    <input type="number" id="travelers" name="travelers" min="1" required />
+  </div>
+
+  <div class="form-group">
+    <label for="budget">Estimated Budget *</label>
+    <select id="budget" name="budget" required>
+      <option value="$1500-$2000">$1500 - $2000</option>
+      <option value="$2000-$3000">$2000 - $3000</option>
+      <option value="$3000-$4000">$3000 - $4000</option>
+      <option value="no_budget">No set budget</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="travel_dates">Preferred Travel Dates *</label>
+    <input type="text" id="travel_dates" name="travel_dates" placeholder="MM/DD/YYYY - MM/DD/YYYY" required />
+  </div>
 
   <label for="trip-details">Tell us about your trip *</label>
   <textarea id="trip-details" name="trip_details" placeholder="Dates, number of travelers, interests, etc." required></textarea>
