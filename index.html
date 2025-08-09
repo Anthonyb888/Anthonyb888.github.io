@@ -28,13 +28,13 @@
 
     /* Make all main titles the same style and size */
     h1, h2, h3 {
-  font-family: 'Mouse Memoirs', cursive;
-  font-weight: bold;
-  font-size: 3rem; /* adjust size as needed */
-  margin-bottom: 1rem;
-  text-align: center;
-  color: black; /* changed to black */
-}
+      font-family: 'Mouse Memoirs', cursive;
+      font-weight: bold;
+      font-size: 3rem; /* adjust size as needed */
+      margin-bottom: 1rem;
+      text-align: center;
+      color: black; /* changed to black */
+    }
 
     .page-wrapper {
       display: flex;
@@ -100,6 +100,24 @@
     }
 
     nav a:hover, .dropbtn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Quote button in sidebar */
+    .quote-button-sidebar {
+      display: block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 6px;
+      margin-top: 1rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .quote-button-sidebar:hover {
       background-color: var(--primary-dark);
     }
 
@@ -489,6 +507,7 @@
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <a href="#downloads">Downloads</a>
+        <a href="quote.html" class="quote-button-sidebar">Get a Quote</a> <!-- new button -->
       </nav>
     </header>
 
