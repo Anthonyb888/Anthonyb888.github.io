@@ -1,759 +1,855 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shield and Castle Travel Agency</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shield & Castle Travel | Disney Vacation Experts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Disney-style font -->
-  <link href="https://fonts.cdnfonts.com/css/waltograph" rel="stylesheet" />
-  <!-- Import Mouse Memoirs font -->
-  <link href="https://fonts.cdnfonts.com/css/mouse-memoirs" rel="stylesheet" />
+  :root {
+    --navy: #0d1f3c;
+    --navy-mid: #162847;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --cream: #f9f5ee;
+    --warm-white: #fefcf8;
+    --text-dark: #1a1a2e;
+    --text-mid: #3d3d5c;
+    --text-light: #7a7a9a;
+  }
 
-  <style>
-    :root {
-      --primary-color: #004085;
-      --primary-dark: #002952;
-      --accent-color: #f7d76b;
-    }
+  html { scroll-behavior: smooth; }
 
-    /* Reset */
-    body, html {
-      height: 100%;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f8ff;
-      color: #333;
-    }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
 
-    /* Make all main titles the same style and size */
-    h1, h2, h3 {
-  font-family: 'Mouse Memoirs', cursive;
-  font-weight: bold;
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  color: black; /* default color for all headings */
-}
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(13, 31, 60, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    transition: padding 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: #fff; font-weight: 300; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.18em !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
 
-/* Specific white heading */
-.white-heading {
-  color: white !important;
-}
-    
-    .page-wrapper {
-      display: flex;
-      min-height: 100vh;
-    }
+  /* ── HERO ── */
+  .hero {
+    height: 100vh;
+    min-height: 700px;
+    background:
+      linear-gradient(to bottom, rgba(13,31,60,0.55) 0%, rgba(13,31,60,0.3) 50%, rgba(13,31,60,0.75) 100%),
+      url('https://anthonyb888.github.io/carousel1.jpg') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--warm-white));
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.9rem 2.2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.1); }
 
-    /* Sidebar styles */
-    header {
-      background: var(--primary-color);
-      color: white;
-      width: 250px;
-      padding: 2rem 1rem;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      font-family: 'Waltograph', cursive;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      overflow-y: auto;
-    }
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--navy);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .trust-item .icon { color: var(--gold); font-size: 1.1rem; }
 
-    .logo {
-      width: 150px;
-      height: auto;
-      margin-bottom: 1rem;
-      display: block;
-    }
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .section-title em { font-style: italic; }
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.9;
+    max-width: 520px;
+    font-weight: 300;
+  }
+  .divider {
+    width: 48px; height: 2px;
+    background: var(--gold);
+    margin: 1.5rem 0;
+  }
 
-    header h2 {
-      font-size: 1.8rem;
-      text-align: center;
-      margin: 0;
-      line-height: 1.2;
-      color: white; /* override global h2 color for sidebar */
-    }
+  /* ── DESTINATIONS ── */
+  .destinations {
+    background: var(--cream);
+    text-align: center;
+  }
+  .destinations .section-title,
+  .destinations .section-label { text-align: center; }
+  .destinations .section-sub { margin: 0 auto 3.5rem; }
+  .destinations .divider { margin: 1.5rem auto; }
 
-    nav {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      align-items: center;
-    }
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .dest-card {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .dest-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .dest-card:hover img { transform: scale(1.08); }
+  .dest-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,31,60,0.85) 0%, transparent 55%);
+  }
+  .dest-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    padding: 1.2rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+  }
+  .dest-label span {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    font-style: italic;
+    text-transform: none;
+    margin-top: 0.2rem;
+    color: var(--gold-light);
+  }
 
-    nav a, .dropbtn {
-      color: white;
-      padding: 0.75rem 1rem;
-      text-decoration: none;
-      font-weight: bold;
-      width: 100%;
-      text-align: center;
-      border-radius: 6px;
-      font-family: Arial, sans-serif;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      user-select: none;
-      box-sizing: border-box;
-      transition: background-color 0.3s ease;
-    }
+  /* ── ABOUT ── */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: url('https://anthonyb888.github.io/disney-castle.jpg') center/cover,
+                linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-img-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    background: var(--gold);
+    color: var(--navy);
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+  .about-badge strong { font-size: 1.6rem; display: block; line-height: 1; }
+  .about p {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 2;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+  .about-credential {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+  }
+  .about-credential .cred-icon { font-size: 1.5rem; }
+  .about-credential .cred-text { font-size: 0.75rem; color: var(--text-mid); line-height: 1.5; }
+  .about-credential .cred-text strong { display: block; color: var(--navy); font-size: 0.8rem; }
 
-    nav a:hover, .dropbtn:hover {
-      background-color: var(--primary-dark);
-    }
+  /* ── SERVICES ── */
+  .services-section {
+    background: var(--navy);
+    padding: 6rem 4rem;
+    text-align: center;
+  }
+  .services-section .section-title { color: #fff; }
+  .services-section .section-label { color: var(--gold); }
+  .services-section .section-sub { color: rgba(255,255,255,0.55); margin: 0 auto 3.5rem; }
+  .services-section .divider { margin: 1.5rem auto; }
 
-    /* Quote button in sidebar */
-    .quote-button-sidebar {
-      display: block;
-      background-color: var(--primary-color);
-      color: white;
-      padding: 0.75rem 1rem;
-      font-weight: bold;
-      text-align: center;
-      border-radius: 6px;
-      margin-top: 1rem;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .svc-card {
+    background: var(--navy-mid);
+    padding: 2.5rem 2rem;
+    text-align: left;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .svc-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .svc-card:hover { background: rgba(201,168,76,0.06); }
+  .svc-card:hover::before { transform: scaleX(1); }
+  .svc-icon { font-size: 1.8rem; margin-bottom: 1.2rem; display: block; }
+  .svc-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .svc-card p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.9;
+    font-weight: 300;
+  }
 
-    .quote-button-sidebar:hover {
-      background-color: var(--primary-dark);
-    }
+  /* ── WHY ── */
+  .why {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 100%;
+  }
+  .why-image {
+    background: url('https://anthonyb888.github.io/fireworks.jpg') center/cover no-repeat;
+    min-height: 500px;
+    position: relative;
+  }
+  .why-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(13,31,60,0.3);
+  }
+  .why-content {
+    background: var(--cream);
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .why-list { list-style: none; margin-top: 2rem; }
+  .why-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(13,31,60,0.08);
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .why-list li:last-child { border-bottom: none; }
+  .why-list .check {
+    width: 20px; height: 20px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.6rem;
+    color: var(--navy);
+    font-weight: 700;
+    margin-top: 0.15rem;
+  }
 
-    /* Dropdown inside sidebar */
-    .dropdown {
-      width: 100%;
-      text-align: center;
-      position: relative;
-    }
+  /* ── BEYOND DISNEY ── */
+  .beyond {
+    text-align: center;
+    padding: 6rem 4rem;
+    background: var(--warm-white);
+  }
+  .beyond .section-sub { margin: 0 auto 3.5rem; }
+  .beyond .divider { margin: 1.5rem auto; }
+  .beyond-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .beyond-card {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    text-decoration: none;
+  }
+  .beyond-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .beyond-card:hover img { transform: scale(1.06); }
+  .beyond-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,31,60,0.8) 0%, transparent 60%);
+  }
+  .beyond-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    padding: 1.5rem;
+    text-align: left;
+  }
+  .beyond-label h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: #fff;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .beyond-label p {
+    font-size: 0.65rem;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
 
-    .dropdown-content {
-      position: relative; /* no absolute */
-      background-color: white;
-      box-shadow: none;
-      border-radius: 0;
-      display: none;
-      margin-top: 0.5rem;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0;
-      z-index: auto;
-    }
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--navy);
+    padding: 6rem 4rem;
+    text-align: center;
+  }
+  .contact-section .section-title { color: #fff; }
+  .contact-section .section-label { color: var(--gold); }
+  .contact-section .section-sub { color: rgba(255,255,255,0.55); margin: 0 auto 3rem; }
+  .contact-section .divider { margin: 1.5rem auto; }
+  .contact-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+  }
+  .contact-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2rem 2.5rem;
+    border-radius: 4px;
+    text-align: center;
+    min-width: 180px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .contact-card:hover {
+    background: rgba(201,168,76,0.08);
+    border-color: var(--gold);
+  }
+  .contact-card .c-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+  .contact-card .c-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .contact-card a, .contact-card p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    text-decoration: none;
+    font-weight: 300;
+  }
+  .contact-card a:hover { color: var(--gold-light); }
 
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
+  /* ── FOOTER ── */
+  footer {
+    background: #080f1e;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .footer-logo span { color: rgba(255,255,255,0.4); font-weight: 300; }
+  footer p {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.05em;
+  }
 
-    .dropdown-content a {
-      color: var(--primary-color);
-      padding: 0.75rem 1rem;
-      display: block;
-      width: 100%;
-      text-align: center;
-      border-radius: 0;
-      font-family: Arial, sans-serif;
-      box-sizing: border-box;
-      transition: background-color 0.3s ease;
-    }
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    /* Main content shifted right */
-    main {
-      margin-left: 250px;
-      padding: 1rem 2rem;
-      flex-grow: 1;
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      background: url('castle.jpg') center/cover no-repeat;
-      padding: 6rem 1rem;
-      color: white;
-      text-align: center;
-      text-shadow: 2px 2px 6px #000;
-      overflow: hidden;
-      font-family: 'Waltograph', cursive;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.3));
-      z-index: 0;
-      border-radius: 10px;
-    }
-
-    .hero h1,
-    .hero p {
-      position: relative;
-      z-index: 2;
-      margin: 0;
-    }
-
-    .hero h1 {
-      animation: bounce 1.5s ease-in-out infinite alternate;
-    }
-
-    /* Sparkles */
-    .sparkles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: visible;
-    }
-
-    .sparkle {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      opacity: 0.9;
-      animation: fall 6s linear infinite, twinkle 1.5s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 2px);
-    }
-
-    .sparkle.gold {
-      background: var(--accent-color);
-      filter: drop-shadow(0 0 6px var(--accent-color));
-    }
-
-    .sparkle.pink {
-      background: #f49ac2;
-      filter: drop-shadow(0 0 6px #f49ac2);
-    }
-
-    .sparkle.blue {
-      background: #78c3ff;
-      filter: drop-shadow(0 0 6px #78c3ff);
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-      }
-      100% {
-        transform: translateY(100vh);
-      }
-    }
-
-    @keyframes twinkle {
-      0% {
-        opacity: 0.9;
-      }
-      100% {
-        opacity: 0.3;
-      }
-    }
-
-    @keyframes bounce {
-      0% {
-        transform: translateY(0);
-      }
-      100% {
-        transform: translateY(-15px);
-      }
-    }
-
-    /* Section styling */
-    .section {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem 1rem;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Image placeholder style */
-    .image-placeholder {
-      width: 100%;
-      height: 300px;
-      background-color: #f0f0f0;
-      text-align: center;
-      line-height: 300px;
-      color: #ccc;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-      user-select: none;
-    }
-
-    /* Services layout */
-    .services {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-
-    .service {
-      background: white;
-      width: 250px;
-      padding: 1rem 1rem 2.5rem;
-      border: 10px solid white;
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
-      text-align: center;
-      font-family: Arial, sans-serif;
-      position: relative;
-      transition: transform 0.3s ease;
-      border-radius: 10px;
-    }
-
-    .service:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.35);
-    }
-
-    .service img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      margin-bottom: 0.75rem;
-      border-radius: 8px;
-      border: 4px solid white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    }
-
-    .service h3 {
-      margin: 0.5rem 0 0.25rem;
-      font-weight: bold;
-      font-size: 3rem; /* match all headings */
-    }
-
-    .service p {
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    /* Get a Quote Button Section */
-    #get-quote {
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .quote-button {
-      background-color: var(--primary-color);
-      color: white;
-      padding: 1rem 2rem;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      font-family: Arial, sans-serif;
-      display: inline-block;
-      transition: background-color 0.3s ease;
-    }
-
-    .quote-button:hover {
-      background-color: var(--primary-dark);
-    }
-
-    footer {
-      background: var(--primary-color);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-family: Arial, sans-serif;
-      margin-top: 3rem;
-    }
-
-    a {
-      color: var(--primary-color);
-      text-decoration: underline;
-    }
-
-    /* Carousel styles */
-    .carousel {
-      position: relative;
-      width: 100%;          /* full width inside main */
-      margin: 2rem 0;       /* vertical margin only */
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-      max-width: none;      /* remove 1000px max width */
-      height: 350px;        /* increased height */
-    }
-
-    .carousel-images {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      width: 100%;
-    }
-
-    .carousel-images img {
-      width: 100%;
-      flex-shrink: 0;
-      object-fit: cover;
-      height: 350px;      /* match carousel height */
-      border-radius: 10px;
-    }
-
-    /* Navigation arrows */
-    .carousel-nav {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .carousel-nav button {
-      background: rgba(0,0,0,0.4);
-      border: none;
-      color: white;
-      font-size: 2rem;
-      padding: 0 12px;
-      cursor: pointer;
-      pointer-events: all;
-      border-radius: 50%;
-      user-select: none;
-      transition: background 0.3s ease;
-    }
-
-    .carousel-nav button:hover {
-      background: rgba(0,0,0,0.7);
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      header {
-        width: 200px;
-        padding: 1.5rem 1rem;
-      }
-
-      main {
-        margin-left: 200px;
-        padding: 1rem 1rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .page-wrapper {
-        flex-direction: column;
-      }
-
-      header {
-        position: relative;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 1rem;
-      }
-
-      .logo {
-        width: 100px;
-        margin-bottom: 0;
-      }
-
-      header h2 {
-        font-size: 1.2rem;
-        text-align: left;
-        flex-grow: 1;
-        margin-left: 1rem;
-        align-self: center;
-        color: white; /* keep sidebar heading white on mobile */
-      }
-
-      nav {
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      nav a, .dropbtn {
-        padding: 0.5rem 0.75rem;
-        width: auto;
-      }
-
-      .dropdown-content {
-        position: absolute;
-        background-color: white;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        border-radius: 4px;
-        display: none;
-        margin-top: 0.5rem;
-        width: auto;
-        right: 1rem;
-        left: auto;
-        z-index: 9999;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
-      main {
-        margin-left: 0;
-        padding: 1rem;
-      }
-    }
-  </style>
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section, .about { padding: 4rem 1.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .dest-grid { grid-template-columns: repeat(2, 1fr); }
+    .dest-card:last-child { grid-column: span 2; aspect-ratio: 16/7; }
+    .services-grid { grid-template-columns: 1fr; }
+    .why { grid-template-columns: 1fr; }
+    .why-image { min-height: 250px; }
+    .why-content { padding: 3rem 1.5rem; }
+    .beyond-grid { grid-template-columns: 1fr; }
+    .trust-bar { gap: 1.5rem; padding: 1.5rem; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    .contact-section { padding: 4rem 1.5rem; }
+    .services-section { padding: 4rem 1.5rem; }
+    .beyond { padding: 4rem 1.5rem; }
+    .destinations { padding: 4rem 1.5rem; }
+  }
+</style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <img src="Shield-and-Castle-Logo.png" alt="Shield and Castle Logo" class="logo" />
-      <h2>Shield and Castle Travel Agency</h2>
-      <nav>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="downloads.html">Downloads</a>
-        <a href="quote.html" class="quote-button-sidebar">Get a Quote</a> <!-- new button -->
-      </nav>
-    </header>
 
-    <main>
-      <section class="hero">
-        <h1 class="white-heading">Your Dream Disney Vacation Starts Here</h1>
-        <p>I'll help you find the perfect Disney resort based on your budget and vibe...</p>
-        <div class="sparkles">
-          <!-- Gold sparkles -->
-          <div class="sparkle gold" style="left: 10%; animation-delay: 0s;"></div>
-          <div class="sparkle gold" style="left: 40%; animation-delay: 1.5s;"></div>
-          <div class="sparkle gold" style="left: 70%; animation-delay: 3s;"></div>
-          <!-- Pink sparkles -->
-          <div class="sparkle pink" style="left: 20%; animation-delay: 0.7s;"></div>
-          <div class="sparkle pink" style="left: 50%; animation-delay: 2.2s;"></div>
-          <div class="sparkle pink" style="left: 80%; animation-delay: 4s;"></div>
-          <!-- Blue sparkles -->
-          <div class="sparkle blue" style="left: 30%; animation-delay: 1.1s;"></div>
-          <div class="sparkle blue" style="left: 60%; animation-delay: 2.7s;"></div>
-          <div class="sparkle blue" style="left: 90%; animation-delay: 4.5s;"></div>
-        </div>
+<!-- NAV -->
+<nav>
+  <a href="#"><img src="https://anthonyb888.github.io/Shield-and-Castle-Logo.png" alt="Shield and Castle" style="height: 45px;"></a>
+  <ul class="nav-links">
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.disneytravelcenter.com/ms437fbce4/" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
 
-        <p>Let the magic begin — I'll take care of everything!</p>
-      </section>
-
-     <!-- Specializing in Disney Destinations -->
-<section id="specialize-disney-destinations" class="section" style="text-align: center;">
-  <h2 style="font-family: 'Mouse Memoirs', cursive; font-weight: bold;">
-    Specializing in Disney Destinations
-  </h2>
-  <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
-    <div style="flex: 1 1 180px; max-width: 180px; text-align: center;">
-      <a href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++walt-disney-world++walt-disney-world/" target="_blank" rel="noopener noreferrer">
-        <img src="wdw.jpg" alt="Walt Disney World®" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" />
-      </a>
-      <p>Walt Disney World®</p>
-    </div>
-    <div style="flex: 1 1 180px; max-width: 180px; text-align: center;">
-      <a href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++disney-cruise-line++disney-cruise-line/" target="_blank" rel="noopener noreferrer">
-        <img src="dcl.jpg" alt="Disney Cruise Line" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" />
-      </a>
-      <p>Disney Cruise Line</p>
-    </div>
-    <div style="flex: 1 1 180px; max-width: 180px; text-align: center;">
-      <a href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++disneyland++disneyland/" target="_blank" rel="noopener noreferrer">
-        <img src="dland.jpg" alt="Disneyland Resort" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" />
-      </a>
-      <p>Disneyland Resort</p>
-    </div>
-    <div style="flex: 1 1 180px; max-width: 180px; text-align: center;">
-      <a href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++aulani++aulani/" target="_blank" rel="noopener noreferrer">
-        <img src="Aulani.jpg" alt="Aulani, Resort & Spa" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" />
-      </a>
-      <p>Aulani, Resort & Spa</p>
-    </div>
-    <div style="flex: 1 1 180px; max-width: 180px; text-align: center;">
-      <a href="https://www.adventuresbydisney.com/?ef_id=2dde86f24b981467aa21ee64e1299a29:G:s&s_kwcid=AL!5046!10!80195761175952!!!!80195856563327!!367564028!1283130393903397&CMP=KNC-FY25_ABD_TRA_DOM_TSTP_LGN_GNRL_Gold|B|5256700.PF.AM.01.02|M1UZJBO|BR|&keyword_id=kwd-80195856563327:loc-190|dc|adventures%20by%20disney||e|5046:3|&msclkid=2dde86f24b981467aa21ee64e1299a29" target="_blank" rel="noopener noreferrer">
-        <img src="Adventures.jpg" alt="Adventures By Disney" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" />
-      </a>
-      <p>Adventures By Disney</p>
-    </div>
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Disney-Certified Travel Expert · Fee-Free Service</p>
+  <h1>Your <em>Magical</em><br>Vacation Awaits</h1>
+  <p>Expert, personalized Disney vacation planning — from Walt Disney World to the high seas. Let me handle every detail while you focus on the magic.</p>
+  <div class="hero-btns">
+    <a href="https://www.disneytravelcenter.com/ms437fbce4/" class="btn-primary">Start Planning</a>
+    <a href="#destinations" class="btn-outline">Explore Destinations</a>
   </div>
-  <p style="max-width: 700px; margin: 0 auto;">
-    You've got questions, I've got answers! From resort choices to ports of call, from knowing what's included and what to expect, I have all of the information you need to help you decide which vacation is best for you. Whichever destination you choose, the magic and the memories will be there waiting!
-  </p>
 </section>
 
- <!-- Stress-Free Vacation Planning -->
-<section id="stress-free-planning" class="section" style="text-align: center;">
-  <h2 class="title-mouse-memoirs">STRESS-FREE Vacation Planning You Can Count On!</h2>
-  <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0 2rem;">
-    <div style="flex: 1 1 240px; max-width: 240px; text-align: center;">
-      <img src="dumbo.jpg" alt="Dumbo" style="width: 100%; height: 240px; object-fit: cover; border-radius: 8px;" />
-    </div>
-    <div style="flex: 1 1 240px; max-width: 240px; text-align: center;">
-      <img src="ears.jpg" alt="Ears" style="width: 100%; height: 240px; object-fit: cover; border-radius: 8px;" />
-    </div>
-    <div style="flex: 1 1 240px; max-width: 240px; text-align: center;">
-      <img src="guns.jpg" alt="Guns" style="width: 100%; height: 240px; object-fit: cover; border-radius: 8px;" />
-    </div>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="icon">✦</span> Disney College of Knowledge Graduate</div>
+  <div class="trust-item"><span class="icon">✦</span> 4+ Years of Experience</div>
+  <div class="trust-item"><span class="icon">✦</span> 100% Fee-Free Service</div>
+  <div class="trust-item"><span class="icon">✦</span> Personalized Itineraries</div>
+</div>
+
+<!-- DESTINATIONS -->
+<section class="destinations" id="destinations">
+  <div class="reveal">
+    <p class="section-label">Where the Magic Lives</p>
+    <h2 class="section-title">Disney <em>Destinations</em></h2>
+    <div class="divider"></div>
+    <p class="section-sub">From the most magical place on earth to the open ocean — every Disney destination offers something unforgettable.</p>
   </div>
-  <p style="max-width: 700px; margin: 0 auto;">
-    When you choose Shield and Castle, your vacation is my top priority. This is your trip, and I’m committed to making sure all your travel wishes and needs are met, while providing friendly, professional, and award-winning service. No stress, no surprise fees — I’ve got you covered every step of the way.
-  </p>
+  <div class="dest-grid reveal">
+    <a class="dest-card" href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++walt-disney-world++walt-disney-world/" target="_blank">
+      <img src="https://anthonyb888.github.io/wdw.jpg" alt="Walt Disney World" loading="lazy">
+      <div class="dest-label">WDW<span>Walt Disney World®</span></div>
+    </a>
+    <a class="dest-card" href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++disney-cruise-line++disney-cruise-line/" target="_blank">
+      <img src="https://anthonyb888.github.io/dcl.jpg" alt="Disney Cruise Line" loading="lazy">
+      <div class="dest-label">DCL<span>Disney Cruise Line</span></div>
+    </a>
+    <a class="dest-card" href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++disneyland++disneyland/" target="_blank">
+      <img src="https://anthonyb888.github.io/dland.jpg" alt="Disneyland Resort" loading="lazy">
+      <div class="dest-label">DLR<span>Disneyland Resort</span></div>
+    </a>
+    <a class="dest-card" href="https://www.disneytravelcenter.com/MIN-000000000103255/sites++aulani++aulani/" target="_blank">
+      <img src="https://anthonyb888.github.io/Aulani.jpg" alt="Aulani Resort" loading="lazy">
+      <div class="dest-label">Hawaii<span>Aulani Resort & Spa</span></div>
+    </a>
+    <a class="dest-card" href="https://www.adventuresbydisney.com/" target="_blank">
+      <img src="https://anthonyb888.github.io/Adventures.jpg" alt="Adventures By Disney" loading="lazy">
+      <div class="dest-label">ABD<span>Adventures by Disney</span></div>
+    </a>
+  </div>
 </section>
 
-  <!-- Magical, Professional and Fee-Free Services -->
-<section id="magical-services" class="section" style="max-width: 800px; margin: 2rem auto; color: #004085;">
-  <h2 class="title-mouse-memoirs" style="text-align: center; margin-bottom: 2rem;">
-    Magical, Professional and Fee-Free Services
-  </h2>
-  <div style="display: flex; align-items: flex-start; gap: 2rem;">
-    <div style="flex: 1; max-width: 350px;">
-      <img src="balloon.jpg" alt="Balloon" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);" />
+<!-- ABOUT -->
+<div class="about" id="about">
+  <div class="about-img-wrap reveal">
+    <div class="about-img-frame">
+      <img src="https://anthonyb888.github.io/carousel1.jpg" alt="Disney Castle">
     </div>
-    <ul style="flex: 2; list-style-type: disc; padding-left: 1.25rem; margin: 0; color: #333; font-size: 1.1rem; line-height: 1.6;">
-      <li>Personalized vacation planning to maximize your fun and minimize stress</li>
-      <li>Expert guidance on Disney parks, resorts, cruises, and more</li>
-      <li>No hidden fees or charges — fee-free booking services</li>
-      <li>Insider tips and tricks to enhance your vacation experience</li>
-      <li>Customized itinerary creation tailored to your family’s needs</li>
-      <li>Assistance with dining reservations, FastPasses, and special events</li>
+    <div class="about-badge">
+      <strong>4+</strong>
+      Years of<br>Experience
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="section-label">Meet Your Planner</p>
+    <h2 class="section-title">Hi, I'm <em>Anthony</em></h2>
+    <div class="divider"></div>
+    <p>I'm Anthony Biagini, your dedicated Disney travel expert. I'm passionate about helping families and travelers create unforgettable memories at Disney destinations — from theme parks to resorts and everything in between.</p>
+    <p>My love for Disney goes beyond the parks. It's about the joy, wonder, and connection that a perfectly planned trip can bring. I listen carefully to your needs to craft an itinerary that fits your style and budget — and I handle every detail so you don't have to.</p>
+    <p>My expertise extends to cruises, all-inclusive resorts, and international travel, ensuring your entire vacation is seamless from start to finish.</p>
+    <div class="about-credential">
+      <span class="cred-icon">🎓</span>
+      <div class="cred-text">
+        <strong>Disney College of Knowledge Graduate</strong>
+        Certified Disney destination specialist with in-depth training on all things Disney.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="reveal">
+    <p class="section-label">What I Offer</p>
+    <h2 class="section-title" style="color:#fff;">Expert <em>Services</em></h2>
+    <div class="divider"></div>
+    <p class="section-sub">Everything you need for a stress-free, magical vacation — all at absolutely no cost to you.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="svc-card">
+      <span class="svc-icon">🗺️</span>
+      <h3>Custom Itineraries</h3>
+      <p>Personalized park plans including Genie+, Lightning Lane, and insider strategies to maximize every minute of your trip.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">🏰</span>
+      <h3>Resort Booking</h3>
+      <p>I'll find the perfect Disney resort for your budget and style — from value to deluxe, each with unique amenities and magic.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">🚢</span>
+      <h3>Disney Cruise Line</h3>
+      <p>Planning cruises that match your desired destinations, dates, and budget with all the Disney magic at sea.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">🍽️</span>
+      <h3>Dining Reservations</h3>
+      <p>I'll secure your table at Disney's most popular restaurants before they fill up — so you never miss a magical meal.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">💡</span>
+      <h3>Insider Tips & Advice</h3>
+      <p>Park strategies, best times to visit rides, hidden gems, photo spots, and exclusive knowledge only a true Disney expert knows.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-icon">🌴</span>
+      <h3>All-Inclusive Booking</h3>
+      <p>One booking, endless magic — all meals, drinks, and fun included. Perfect for beach getaways and tropical escapes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<div class="why">
+  <div class="why-image"></div>
+  <div class="why-content reveal">
+    <p class="section-label">Why Choose Shield & Castle</p>
+    <h2 class="section-title">Your Vacation,<br><em>My Priority</em></h2>
+    <div class="divider"></div>
+    <ul class="why-list">
+      <li><span class="check">✓</span> Completely fee-free service — I'm paid by Disney, not you</li>
+      <li><span class="check">✓</span> Certified Disney College of Knowledge graduate</li>
+      <li><span class="check">✓</span> Personalized planning tailored to your family's needs</li>
+      <li><span class="check">✓</span> Expert knowledge of parks, resorts, cruises & dining</li>
+      <li><span class="check">✓</span> Assistance with all reservations, special events & extras</li>
+      <li><span class="check">✓</span> Ongoing support before, during, and after your trip</li>
     </ul>
   </div>
-</section>
+</div>
 
-            <!-- Photo Carousel -->
-      <section class="carousel" aria-label="Disney Vacation Photos">
-        <div class="carousel-images" id="carouselImages">
-          <img src="carousel1.jpg" alt="Disney Castle at sunset" />
-          <img src="fireworks.jpg" alt="Disney fireworks over park" />
-          <img src="cruise.jpg" alt="Disney Cruise ship at sea" />
-          <img src="resort3.jpg" alt="Disney Resort pool and palm trees" />
-        </div>
-        <div class="carousel-nav">
-          <button id="prevBtn" aria-label="Previous Slide">&#10094;</button>
-          <button id="nextBtn" aria-label="Next Slide">&#10095;</button>
-        </div>
-      </section>
-
-     <!-- Vacation Destinations Beyond the MAGIC -->
-<section id="vacation-destinations-beyond" class="section">
-  <h2 class="title-mouse-memoirs" style="text-align: center;">
-    Vacation Destinations Beyond the MAGIC
-  </h2>
-  <p style="text-align: center; max-width: 700px; margin: 0.5rem auto 1.5rem;">
-    Considering a vacation experience beyond the theme parks? I offer an array of options perfect for everyone in your family. From all-inclusive tropical destinations to big thrills and epic adventures at sea, you'll discover shield and castle Travel difference when I help you plan an unforgettable and stress-free vacation to the magic or beyond!
-  </p>
-  <h3 style="text-align: center; font-weight: normal; color: black; font-family: 'Mouse Memoirs', cursive; margin-bottom: 1.5rem;">
-  All-Inclusive Resorts, Big Thrills and Epic Adventures Await
-</h3>
-  
-  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <div style="flex: 1 1 250px; max-width: 300px; text-align: center;">
-      <img src="sandals.jpg" alt="Sandals All-Inclusive Resort" style="width: 100%; border-radius: 8px; object-fit: cover; height: 180px;" />
-      <p>All-Inclusive Resorts</p>
-    </div>
-    <div style="flex: 1 1 250px; max-width: 300px; text-align: center;">
-      <img src="universal.jpg" alt="Universal Theme Park" style="width: 100%; border-radius: 8px; object-fit: cover; height: 180px;" />
-      <p>Big Thrills at Universal</p>
-    </div>
-    <div style="flex: 1 1 250px; max-width: 300px; text-align: center;">
-      <img src="cruiseo.jpg" alt="Cruise Adventure" style="width: 100%; border-radius: 8px; object-fit: cover; height: 180px;" />
-      <p>Epic Adventures at Sea</p>
-    </div>
+<!-- BEYOND DISNEY -->
+<section class="beyond">
+  <div class="reveal">
+    <p class="section-label">Beyond the Parks</p>
+    <h2 class="section-title">More <em>Adventures</em> Await</h2>
+    <div class="divider"></div>
+    <p class="section-sub">Disney is just the beginning. Explore a world of vacation options for every traveler and every dream.</p>
+  </div>
+  <div class="beyond-grid reveal">
+    <a class="beyond-card" href="#">
+      <img src="https://anthonyb888.github.io/sandals.jpg" alt="All-Inclusive Resorts" loading="lazy">
+      <div class="beyond-label">
+        <h3>All-Inclusive Resorts</h3>
+        <p>Sandals & Beyond</p>
+      </div>
+    </a>
+    <a class="beyond-card" href="#">
+      <img src="https://anthonyb888.github.io/universal.jpg" alt="Universal Theme Parks" loading="lazy">
+      <div class="beyond-label">
+        <h3>Big Thrills</h3>
+        <p>Universal & More</p>
+      </div>
+    </a>
+    <a class="beyond-card" href="#">
+      <img src="https://anthonyb888.github.io/cruiseo.jpg" alt="Cruise Adventures" loading="lazy">
+      <div class="beyond-label">
+        <h3>Epic Adventures</h3>
+        <p>Cruises at Sea</p>
+      </div>
+    </a>
   </div>
 </section>
 
-     <section id="services" class="section">
-  <h2>🏰 Services🏰</h2>
-  <div class="services">
-    <div class="service">
-      <img src="custom-itinerary.jpg" alt="Custom Itineraries" />
-      <h3>Custom Itineraries</h3>
-      <p>Personalized park plans including Genie+, Lightning Lane, and more.</p>
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="reveal">
+    <p class="section-label">Let's Get Started</p>
+    <h2 class="section-title" style="color:#fff;">Ready to <em>Plan Your</em><br>Dream Vacation?</h2>
+    <div class="divider"></div>
+    <p class="section-sub">Reach out today and let's start crafting your perfect magical getaway — completely free of charge.</p>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-card">
+      <div class="c-icon">📧</div>
+      <div class="c-label">Email</div>
+      <a href="mailto:anthonybia91@yahoo.com">anthonybia91@yahoo.com</a>
     </div>
-    <div class="service">
-      <img src="resort.jpg" alt="Resort Booking" />
-      <h3>Resort Booking</h3>
-      <p>I'll help you find the perfect Disney resort based on your budget and vibe, whether you're looking for a magical family-friendly atmosphere, a romantic getaway, or an adventurous retreat. From value to deluxe resorts, I’ll guide you through the options, highlight unique amenities, and ensure your stay matches your style and needs perfectly—making your Disney vacation truly unforgettable.</p>
+    <div class="contact-card">
+      <div class="c-icon">📞</div>
+      <div class="c-label">Phone</div>
+      <a href="tel:6463697802">646-369-7802</a>
     </div>
-    <div class="service">
-      <img src="Disney-Cruise.jpg" alt="Disney Cruise" />
-      <h3>Disney Cruise Line Bookings</h3>
-      <p>Planning cruises that fit your desired destinations, dates, and budget.</p>
-    </div>
-    <div class="service">
-      <img src="Disney-Tips.jpg" alt="Disney Tips" />
-      <h3>Exclusive Tips & Insider Advice</h3>
-      <p>Park strategies, best times to visit rides, hidden gems, and photo spots.</p>
-    </div>
-    <div class="service">
-      <img src="dining.jpg" alt="Dining Reservations" />
-      <h3>Dining Reservations</h3>
-      <p>I’ll secure your table at Disney’s most popular restaurants before they fill up.</p>
-    </div>
-    <div class="service">
-      <img src="All-inclusive.jpg" alt="All Inclusive" />
-      <h3>All Inclusive Booking</h3>
-      <p>One booking, endless magic — all meals, drinks, and fun included.</p>
+    <div class="contact-card">
+      <div class="c-icon">🏰</div>
+      <div class="c-label">Book Direct</div>
+      <a href="https://www.disneytravelcenter.com/ms437fbce4/" target="_blank">Official Disney Site</a>
     </div>
   </div>
+  <a href="https://www.disneytravelcenter.com/ms437fbce4/" target="_blank" class="btn-primary">Get Your Free Quote →</a>
 </section>
 
-     <section id="about" class="section">
-  <h2>🏰 About Me🏰</h2>
-  <p>
-    Hi! I’m Anthony Biagini, your dedicated Disney travel expert with over 4 years of experience booking magical vacations. As a proud graduate of the Disney College of Knowledge, I have in-depth training and unmatched expertise on all things Disney. I’m passionate about helping families and travelers create unforgettable memories at Disney destinations — from theme parks to resorts and beyond.
-  </p>
-  <p>
-    My love for Disney goes beyond the parks — it’s about the joy, wonder, and connection that a perfectly planned trip can bring. I understand how important your vacation time is, and I’m committed to making the planning process easy, fun, and stress-free. I take pride in listening carefully to your needs and preferences to craft a customized itinerary that fits your style and budget.
-  </p>
-  <p>
-    But my expertise doesn’t stop there! I also specialize in booking cruises, all-inclusive resorts, and international travel, ensuring your entire vacation is seamless and stress-free. Whether you’re dreaming of a relaxing beach getaway, an adventurous cruise, or a global exploration, I’m here to provide insider tips, expert guidance, and personalized support every step of the way.
-  </p>
-  <p>
-    Whether it’s your first trip or your fifteenth, I’m excited to help you turn your travel dreams into reality. Let’s create magical moments together that you and your loved ones will cherish forever!
-  </p>
-</section>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Shield <span>&</span> Castle <span style="font-family:Montserrat;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;">Travel Agency</span></div>
+  <p>© 2025 Shield and Castle Travel Agency · Anthony Biagini · Disney Travel Expert</p>
+</footer>
 
-      <section id="contact" class="section">
-  <h2>📩 Contact</h2>
-  <p>Email: <a href="mailto:anthonybia91@yahoo.com">anthonybia91@yahoo.com</a></p>
-  <p>Phone: <a href="tel:6463697802">646-369-7802</a></p>
-  <p>Book directly: <a href="https://www.disneytravelcenter.com/ms437fbce4/" target="_blank" rel="noopener noreferrer">Official Disney Travel Site</a></p>
-</section>
-    </main>
-  </div>
-
-  <footer>
-    <p>© 2025 Shield and Castle Travel Agency</p>
-  </footer>
-
-  <script>
-    // Carousel JS
-    const carouselImages = document.getElementById('carouselImages');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const totalImages = carouselImages.children.length;
-    let index = 0;
-
-    function showSlide(i) {
-      if (i < 0) index = totalImages - 1;
-      else if (i >= totalImages) index = 0;
-      else index = i;
-      carouselImages.style.transform = 'translateX(' + (-index * 100) + '%)';
-    }
-
-    prevBtn.addEventListener('click', () => {
-      showSlide(index - 1);
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
     });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
 
-    nextBtn.addEventListener('click', () => {
-      showSlide(index + 1);
+  // Stagger children
+  document.querySelectorAll('.dest-grid, .services-grid, .beyond-grid, .contact-grid').forEach(grid => {
+    [...grid.children].forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.08}s`;
     });
-
-    // Auto-slide every 5 seconds
-    setInterval(() => {
-      showSlide(index + 1);
-    }, 5000);
-  </script>
-
+  });
+</script>
 </body>
 </html>
