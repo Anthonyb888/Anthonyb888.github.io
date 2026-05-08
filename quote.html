@@ -4,23 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get a Quote | Shield & Castle Travel</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-/* ================= YOUR ORIGINAL CSS (UNCHANGED) ================= */
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --navy: #0d1f3c;
+  --navy-mid: #162847;
+  --navy-light: #1e3a5f;
   --gold: #c9a84c;
   --gold-light: #e8c96a;
   --gold-pale: rgba(201,168,76,0.12);
+  --cream: #f9f5ee;
+  --warm-white: #fefcf8;
+  --text-dark: #1a1a2e;
+  --text-mid: #3d3d5c;
+  --text-light: #7a7a9a;
+  --success: #2d8a4e;
 }
 
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Montserrat', sans-serif;
   background: var(--navy);
@@ -29,22 +32,566 @@ body {
   overflow-x: hidden;
 }
 
-/* KEEP ALL YOUR ORIGINAL STYLES (UNCHANGED) */
+/* ── BACKGROUND ── */
+.bg-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--navy);
+  overflow: hidden;
+}
+.bg-wrap::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+}
+.bg-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -200px; left: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30,58,95,0.6) 0%, transparent 70%);
+}
+.bg-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
 
+/* ── LAYOUT ── */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeDown 0.6s ease forwards;
+}
+.header a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  margin-bottom: 2rem;
+}
+.header img { height: 55px; }
+.header-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+.header-brand span { color: rgba(255,255,255,0.5); font-weight: 300; }
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 300;
+  color: white;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+.header h1 em { font-style: italic; color: var(--gold); }
+.header p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  width: 100%;
+  max-width: 580px;
+  margin-bottom: 2rem;
+  animation: fadeDown 0.6s 0.1s ease both;
+}
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 1rem;
+}
+.step-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  flex: 1;
+}
+.step-dot:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: calc(50% + 16px);
+  right: calc(-50% + 16px);
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.4s;
+}
+.step-dot.completed:not(:last-child)::after { background: var(--gold); }
+.dot-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  transition: all 0.3s;
+  position: relative;
+  z-index: 1;
+}
+.step-dot.active .dot-circle {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--navy);
+  box-shadow: 0 0 20px rgba(201,168,76,0.4);
+}
+.step-dot.completed .dot-circle {
+  border-color: var(--gold);
+  background: transparent;
+  color: var(--gold);
+}
+.dot-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.step-dot.active .dot-label { color: var(--gold); }
+.step-dot.completed .dot-label { color: rgba(255,255,255,0.5); }
+
+/* ── CARD ── */
+.form-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 8px;
+  padding: 2.5rem;
+  backdrop-filter: blur(20px);
+  animation: fadeUp 0.5s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* Step panels */
 .step-panel { display: none; }
-.step-panel.active { display: block; }
+.step-panel.active {
+  display: block;
+  animation: slideIn 0.4s ease forwards;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
-.success-panel { display: none; }
+.step-heading {
+  margin-bottom: 1.8rem;
+}
+.step-eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.step-heading h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: white;
+  line-height: 1.15;
+}
+.step-heading h2 em { font-style: italic; color: var(--gold); }
+.step-heading p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 0.5rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ── FIELDS ── */
+.field-group { margin-bottom: 1.4rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.5rem;
+}
+label .req { color: var(--gold); margin-left: 2px; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.06);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+select option { background: var(--navy-mid); color: white; }
+textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+/* ── DESTINATION TILES ── */
+.dest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.dest-option { display: none; }
+.dest-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem 0.5rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255,255,255,0.04);
+  text-align: center;
+}
+.dest-label:hover {
+  border-color: rgba(201,168,76,0.4);
+  background: rgba(201,168,76,0.06);
+}
+.dest-option:checked + .dest-label {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+  box-shadow: 0 0 0 1px var(--gold), 0 4px 20px rgba(201,168,76,0.15);
+}
+.dest-icon { font-size: 1.6rem; }
+.dest-name {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.3;
+}
+.dest-option:checked + .dest-label .dest-name { color: var(--gold); }
+
+/* ── BUDGET TILES ── */
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.budget-option { display: none; }
+.budget-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255,255,255,0.04);
+}
+.budget-label:hover {
+  border-color: rgba(201,168,76,0.4);
+  background: rgba(201,168,76,0.06);
+}
+.budget-option:checked + .budget-label {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+.budget-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+.budget-option:checked + .budget-label .budget-amount { color: var(--gold); }
+.budget-desc {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+}
+
+/* ── TRAVELER COUNTER ── */
+.traveler-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  margin-bottom: 0.6rem;
+}
+.traveler-info { display: flex; flex-direction: column; gap: 0.15rem; }
+.traveler-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+}
+.traveler-sub {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+}
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.counter-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.4);
+  background: transparent;
+  color: var(--gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.counter-btn:hover { background: var(--gold-pale); border-color: var(--gold); }
+.counter-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* ── OCCASION ── */
+.occasion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+.occ-option { display: none; }
+.occ-label {
+  padding: 0.7rem 0.5rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  background: rgba(255,255,255,0.03);
+}
+.occ-label:hover { border-color: rgba(201,168,76,0.4); color: rgba(255,255,255,0.8); }
+.occ-option:checked + .occ-label {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+  color: var(--gold);
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+.btn-back {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
+  padding: 0.85rem 1.5rem;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-back:hover { border-color: rgba(255,255,255,0.4); color: white; }
+.btn-next {
+  flex: 1;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: 0.95rem 2rem;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-next:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+.btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── SUCCESS ── */
+.success-panel {
+  display: none;
+  text-align: center;
+  animation: fadeUp 0.6s ease forwards;
+  padding: 1rem 0;
+}
 .success-panel.active { display: block; }
+.success-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 2rem;
+  box-shadow: 0 10px 40px rgba(201,168,76,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 10px 40px rgba(201,168,76,0.3); }
+  50% { box-shadow: 0 10px 60px rgba(201,168,76,0.5); }
+}
+.success-panel h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+.success-panel h2 em { font-style: italic; color: var(--gold); }
+.success-panel p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+}
+.success-divider {
+  width: 48px; height: 1px;
+  background: var(--gold);
+  margin: 1.5rem auto;
+  opacity: 0.5;
+}
+.success-detail {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px;
+  padding: 1.2rem 1.5rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+.success-detail strong { color: var(--gold); }
+.btn-home {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-home:hover { background: var(--gold-pale); border-color: var(--gold); }
 
-.btn-next, .btn-back { cursor: pointer; }
+/* ── ANIMATIONS ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .form-card { padding: 1.75rem 1.25rem; }
+  .field-row { grid-template-columns: 1fr; }
+  .dest-grid { grid-template-columns: repeat(2, 1fr); }
+  .occasion-grid { grid-template-columns: repeat(2, 1fr); }
+}
 </style>
 </head>
-
 <body>
-
-<form id="quoteForm">
 
 <div class="bg-wrap">
   <div class="bg-lines"></div>
@@ -58,151 +605,350 @@ body {
       <img src="https://anthonyb888.github.io/Shield-and-Castle-Logo.png" alt="Shield and Castle">
       <div class="header-brand">Shield <span>&</span> Castle</div>
     </a>
-
     <h1>Plan Your <em>Dream</em> Vacation</h1>
     <p>Complete in just 4 steps · Takes less than 2 minutes · 100% free</p>
   </div>
 
-  <!-- PROGRESS (UNCHANGED) -->
+  <!-- PROGRESS -->
   <div class="progress-wrap">
     <div class="progress-steps">
-      <div class="step-dot active" id="dot-1"><div class="dot-circle">1</div></div>
-      <div class="step-dot" id="dot-2"><div class="dot-circle">2</div></div>
-      <div class="step-dot" id="dot-3"><div class="dot-circle">3</div></div>
-      <div class="step-dot" id="dot-4"><div class="dot-circle">4</div></div>
+      <div class="step-dot active" id="dot-1">
+        <div class="dot-circle">1</div>
+        <div class="dot-label">You</div>
+      </div>
+      <div class="step-dot" id="dot-2">
+        <div class="dot-circle">2</div>
+        <div class="dot-label">Destination</div>
+      </div>
+      <div class="step-dot" id="dot-3">
+        <div class="dot-circle">3</div>
+        <div class="dot-label">Details</div>
+      </div>
+      <div class="step-dot" id="dot-4">
+        <div class="dot-circle">4</div>
+        <div class="dot-label">Notes</div>
+      </div>
     </div>
   </div>
 
+  <!-- FORM CARD -->
   <div class="form-card">
 
-    <!-- STEP 1 -->
+    <!-- STEP 1: About You -->
     <div class="step-panel active" id="step-1">
-      <input type="text" id="name" name="name" placeholder="Full Name" required>
-      <input type="email" id="email" name="email" placeholder="Email" required>
-      <input type="tel" id="phone" name="phone" placeholder="Phone">
+      <div class="step-heading">
+        <div class="step-eyebrow">Step 1 of 4</div>
+        <h2>Tell me about <em>yourself</em></h2>
+        <p>Just the basics so I know how to reach you.</p>
+      </div>
 
-      <button type="button" onclick="goTo(2)">Continue →</button>
+      <div class="field-group">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Your full name" autocomplete="name">
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="field-group">
+          <label>Phone Number</label>
+          <input type="tel" id="phone" placeholder="(000) 000-0000" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-next" onclick="goTo(2)">Continue →</button>
+      </div>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- STEP 2: Destination -->
     <div class="step-panel" id="step-2">
+      <div class="step-heading">
+        <div class="step-eyebrow">Step 2 of 4</div>
+        <h2>Where would you like to <em>go?</em></h2>
+        <p>Select all that interest you — we can narrow it down together.</p>
+      </div>
 
-      <input type="radio" name="destination" value="Walt Disney World"> Disney World<br>
-      <input type="radio" name="destination" value="Disney Cruise Line"> Cruise<br>
-      <input type="radio" name="destination" value="Disneyland"> Disneyland<br>
-      <input type="radio" name="destination" value="Aulani"> Aulani<br>
-      <input type="radio" name="destination" value="Universal Orlando"> Universal
+      <div class="field-group">
+        <label>Choose Your Destination <span class="req">*</span></label>
+        <div class="dest-grid">
+          <input type="radio" name="destination" id="d1" value="Walt Disney World" class="dest-option">
+          <label for="d1" class="dest-label"><span class="dest-icon">🏰</span><span class="dest-name">Walt Disney World</span></label>
 
-      <button type="button" onclick="goTo(1)">Back</button>
-      <button type="button" onclick="goTo(3)">Continue</button>
+          <input type="radio" name="destination" id="d2" value="Disney Cruise Line" class="dest-option">
+          <label for="d2" class="dest-label"><span class="dest-icon">🚢</span><span class="dest-name">Disney Cruise Line</span></label>
+
+          <input type="radio" name="destination" id="d3" value="Disneyland" class="dest-option">
+          <label for="d3" class="dest-label"><span class="dest-icon">⭐</span><span class="dest-name">Disneyland Resort</span></label>
+
+          <input type="radio" name="destination" id="d4" value="Aulani" class="dest-option">
+          <label for="d4" class="dest-label"><span class="dest-icon">🌺</span><span class="dest-name">Aulani Hawaii</span></label>
+
+          <input type="radio" name="destination" id="d5" value="Adventures by Disney" class="dest-option">
+          <label for="d5" class="dest-label"><span class="dest-icon">🌍</span><span class="dest-name">Adventures by Disney</span></label>
+
+          <input type="radio" name="destination" id="d6" value="All-Inclusive Resort" class="dest-option">
+          <label for="d6" class="dest-label"><span class="dest-icon">🍹</span><span class="dest-name">All-Inclusive Resort</span></label>
+
+          <input type="radio" name="destination" id="d7" value="Universal Orlando" class="dest-option">
+          <label for="d7" class="dest-label"><span class="dest-icon">🎢</span><span class="dest-name">Universal Orlando</span></label>
+
+          <input type="radio" name="destination" id="d8" value="Non-Disney Cruise" class="dest-option">
+          <label for="d8" class="dest-label"><span class="dest-icon">⚓</span><span class="dest-name">Other Cruise Line</span></label>
+
+          <input type="radio" name="destination" id="d9" value="Not Sure Yet" class="dest-option">
+          <label for="d9" class="dest-label"><span class="dest-icon">✨</span><span class="dest-name">Not Sure Yet</span></label>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goTo(1)">← Back</button>
+        <button class="btn-next" onclick="goTo(3)">Continue →</button>
+      </div>
     </div>
 
-    <!-- STEP 3 -->
+    <!-- STEP 3: Trip Details -->
     <div class="step-panel" id="step-3">
-
-      <div>
-        Adults:
-        <button type="button" onclick="adjust('adults',-1)">-</button>
-        <span id="adults-val">2</span>
-        <button type="button" onclick="adjust('adults',1)">+</button>
+      <div class="step-heading">
+        <div class="step-eyebrow">Step 3 of 4</div>
+        <h2>Tell me about your <em>trip</em></h2>
+        <p>Help me understand who's going and when.</p>
       </div>
 
-      <div>
-        Children:
-        <button type="button" onclick="adjust('children',-1)">-</button>
-        <span id="children-val">0</span>
-        <button type="button" onclick="adjust('children',1)">+</button>
+      <div class="field-group">
+        <label>Who's Coming?</label>
+        <div class="traveler-row">
+          <div class="traveler-info">
+            <div class="traveler-name">Adults</div>
+            <div class="traveler-sub">Age 18+</div>
+          </div>
+          <div class="counter">
+            <button class="counter-btn" onclick="adjust('adults', -1)">−</button>
+            <span class="counter-val" id="adults-val">2</span>
+            <button class="counter-btn" onclick="adjust('adults', 1)">+</button>
+          </div>
+        </div>
+        <div class="traveler-row">
+          <div class="traveler-info">
+            <div class="traveler-name">Children</div>
+            <div class="traveler-sub">Under 18</div>
+          </div>
+          <div class="counter">
+            <button class="counter-btn" onclick="adjust('children', -1)">−</button>
+            <span class="counter-val" id="children-val">0</span>
+            <button class="counter-btn" onclick="adjust('children', 1)">+</button>
+          </div>
+        </div>
       </div>
 
-      <input type="date" name="travel_date">
+      <div class="field-row">
+        <div class="field-group">
+          <label>Preferred Travel Date</label>
+          <input type="date" id="travel-date">
+        </div>
+        <div class="field-group">
+          <label>Trip Length</label>
+          <select id="trip-length">
+            <option value="" disabled selected>Select...</option>
+            <option>2–3 nights</option>
+            <option>4–5 nights</option>
+            <option>6–7 nights</option>
+            <option>8–10 nights</option>
+            <option>10+ nights</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
 
-      <select name="trip_length">
-        <option>2–3 nights</option>
-        <option>4–5 nights</option>
-        <option>6–7 nights</option>
-      </select>
+      <div class="field-group">
+        <label>Estimated Budget</label>
+        <div class="budget-grid">
+          <input type="radio" name="budget" id="b1" value="$1,500 – $3,000" class="budget-option">
+          <label for="b1" class="budget-label">
+            <div class="budget-amount">$1,500 – $3,000</div>
+            <div class="budget-desc">Value focused</div>
+          </label>
 
-      <input type="radio" name="budget" value="$1,500 – $3,000">
-      <input type="radio" name="budget" value="$3,000 – $5,000">
-      <input type="radio" name="budget" value="$5,000 – $8,000">
+          <input type="radio" name="budget" id="b2" value="$3,000 – $5,000" class="budget-option">
+          <label for="b2" class="budget-label">
+            <div class="budget-amount">$3,000 – $5,000</div>
+            <div class="budget-desc">Moderate comfort</div>
+          </label>
 
-      <!-- hidden counters -->
-      <input type="hidden" name="adults" id="adults-input">
-      <input type="hidden" name="children" id="children-input">
+          <input type="radio" name="budget" id="b3" value="$5,000 – $8,000" class="budget-option">
+          <label for="b3" class="budget-label">
+            <div class="budget-amount">$5,000 – $8,000</div>
+            <div class="budget-desc">Premium experience</div>
+          </label>
 
-      <button type="button" onclick="goTo(2)">Back</button>
-      <button type="button" onclick="goTo(4)">Continue</button>
+          <input type="radio" name="budget" id="b4" value="$8,000 – $12,000" class="budget-option">
+          <label for="b4" class="budget-label">
+            <div class="budget-amount">$8,000 – $12,000</div>
+            <div class="budget-desc">Luxury getaway</div>
+          </label>
+
+          <input type="radio" name="budget" id="b5" value="$12,000+" class="budget-option">
+          <label for="b5" class="budget-label">
+            <div class="budget-amount">$12,000+</div>
+            <div class="budget-desc">No limit, all out</div>
+          </label>
+
+          <input type="radio" name="budget" id="b6" value="No set budget" class="budget-option">
+          <label for="b6" class="budget-label">
+            <div class="budget-amount">Flexible</div>
+            <div class="budget-desc">No set budget yet</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Special Occasion?</label>
+        <div class="occasion-grid">
+          <input type="radio" name="occasion" id="occ0" value="None" class="occ-option">
+          <label for="occ0" class="occ-label">Just a Vacation</label>
+
+          <input type="radio" name="occasion" id="occ1" value="Birthday" class="occ-option">
+          <label for="occ1" class="occ-label">🎂 Birthday</label>
+
+          <input type="radio" name="occasion" id="occ2" value="Anniversary" class="occ-option">
+          <label for="occ2" class="occ-label">💍 Anniversary</label>
+
+          <input type="radio" name="occasion" id="occ3" value="Honeymoon" class="occ-option">
+          <label for="occ3" class="occ-label">🥂 Honeymoon</label>
+
+          <input type="radio" name="occasion" id="occ4" value="First Disney Trip" class="occ-option">
+          <label for="occ4" class="occ-label">✨ First Disney Trip</label>
+
+          <input type="radio" name="occasion" id="occ5" value="Family Reunion" class="occ-option">
+          <label for="occ5" class="occ-label">👨‍👩‍👧‍👦 Family Reunion</label>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goTo(2)">← Back</button>
+        <button class="btn-next" onclick="goTo(4)">Continue →</button>
+      </div>
     </div>
 
-    <!-- STEP 4 -->
+    <!-- STEP 4: Notes -->
     <div class="step-panel" id="step-4">
+      <div class="step-heading">
+        <div class="step-eyebrow">Step 4 of 4</div>
+        <h2>Anything else I should <em>know?</em></h2>
+        <p>Share any details, wishes, or questions — the more I know, the better I can plan!</p>
+      </div>
 
-      <textarea name="notes" placeholder="Tell me about your trip"></textarea>
+      <div class="field-group">
+        <label>Tell Me About Your Dream Trip</label>
+        <textarea id="notes" placeholder="E.g. We have two young kids who love princesses, we'd love a character dining experience, we're flexible on dates but prefer weekdays..."></textarea>
+      </div>
 
-      <select name="referral">
-        <option>Google</option>
-        <option>Instagram</option>
-        <option>Facebook</option>
-        <option>Friend Referral</option>
-      </select>
+      <div class="field-group">
+        <label>How Did You Hear About Us?</label>
+        <select id="referral">
+          <option value="" disabled selected>Select one...</option>
+          <option>Google Search</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>Friend or Family Referral</option>
+          <option>Disney Community / Group</option>
+          <option>Other</option>
+        </select>
+      </div>
 
-      <button type="button" onclick="goTo(3)">Back</button>
-      <button type="button" onclick="submitForm()">✨ Send My Request</button>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goTo(3)">← Back</button>
+        <button class="btn-next" onclick="submitForm()">✨ Send My Request</button>
+      </div>
     </div>
 
     <!-- SUCCESS -->
     <div class="success-panel" id="success">
       <div class="success-icon">✨</div>
-      <h2>You're all set!</h2>
-      <p>Your request has been received. You’ll hear back within 24 hours.</p>
+      <h2>You're all set, <em id="success-name">friend</em>!</h2>
+      <div class="success-divider"></div>
+      <p>Your vacation request has been received. Anthony will be in touch within 24 hours to start planning your perfect magical getaway.</p>
+      <div class="success-detail">
+        📧 A confirmation will be sent to <strong id="success-email">your email</strong>.<br>
+        📞 Feel free to call anytime: <strong>646-369-7802</strong>
+      </div>
+      <a href="https://anthonyb888.github.io/index.html" class="btn-home">← Back to Home</a>
     </div>
 
   </div>
 </div>
 
-</form>
-
 <script>
-let adults = 2;
-let children = 0;
+  let adults = 2, children = 0;
 
-function adjust(type, delta) {
-  if (type === 'adults') {
-    adults = Math.max(1, adults + delta);
-    document.getElementById('adults-val').innerText = adults;
-  } else {
-    children = Math.max(0, children + delta);
-    document.getElementById('children-val').innerText = children;
+  function adjust(type, delta) {
+    if (type === 'adults') {
+      adults = Math.max(1, adults + delta);
+      document.getElementById('adults-val').textContent = adults;
+    } else {
+      children = Math.max(0, children + delta);
+      document.getElementById('children-val').textContent = children;
+    }
   }
-}
 
-function goTo(step) {
-  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('step-' + step).classList.add('active');
-}
+  function goTo(step) {
+    // Validate step 1
+    if (step === 2) {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      if (!name || !email) {
+        highlight(['name', 'email'], name, email);
+        return;
+      }
+    }
 
-/* ===== FORMSPREE SUBMISSION ===== */
-async function submitForm() {
-
-  document.getElementById("adults-input").value = adults;
-  document.getElementById("children-input").value = children;
-
-  const form = document.getElementById("quoteForm");
-
-  const res = await fetch("https://formspree.io/f/xrejyqlw", {
-    method: "POST",
-    body: new FormData(form),
-    headers: { Accept: "application/json" }
-  });
-
-  if (res.ok) {
+    // Hide all panels
     document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById("success").classList.add("active");
-  } else {
-    alert("Something went wrong. Please try again.");
-  }
-}
-</script>
+    document.getElementById('step-' + step).classList.add('active');
 
+    // Update dots
+    document.querySelectorAll('.step-dot').forEach((dot, i) => {
+      dot.classList.remove('active', 'completed');
+      if (i + 1 < step) dot.classList.add('completed');
+      if (i + 1 === step) dot.classList.add('active');
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function highlight(fields, name, email) {
+    if (!name) document.getElementById('name').style.borderColor = '#e74c3c';
+    else document.getElementById('name').style.borderColor = '';
+    if (!email) document.getElementById('email').style.borderColor = '#e74c3c';
+    else document.getElementById('email').style.borderColor = '';
+    setTimeout(() => {
+      document.getElementById('name').style.borderColor = '';
+      document.getElementById('email').style.borderColor = '';
+    }, 2000);
+  }
+
+  function submitForm() {
+    const name = document.getElementById('name').value.trim() || 'friend';
+    const email = document.getElementById('email').value.trim() || 'your email';
+
+    // Show success
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.step-dot').forEach(d => d.classList.add('completed'));
+    document.getElementById('success').classList.add('active');
+    document.getElementById('success-name').textContent = name.split(' ')[0];
+    document.getElementById('success-email').textContent = email;
+
+    // Hide progress bar
+    document.querySelector('.progress-wrap').style.opacity = '0';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Remove red border on input
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('input', () => el.style.borderColor = '');
+  });
+</script>
 </body>
 </html>
