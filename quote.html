@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --navy: #0d1f3c;
   --navy-mid: #162847;
@@ -22,7 +21,6 @@
   --text-light: #7a7a9a;
   --success: #2d8a4e;
 }
-
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Montserrat', sans-serif;
@@ -31,8 +29,11 @@ body {
   color: white;
   overflow-x: hidden;
 }
-
-/* ── BACKGROUND ── */
+/* ============================================================
+   BACKGROUND — Fixed full-viewport layer rendered behind .page
+   Two radial glows (top-right gold, bottom-left navy) + a subtle
+   grid of gold lines create depth without competing with the form.
+   ============================================================ */
 .bg-wrap {
   position: fixed;
   inset: 0;
@@ -64,8 +65,11 @@ body {
     linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
-
-/* ── LAYOUT ── */
+/* ============================================================
+   LAYOUT — Main content wrapper
+   Sits above the fixed background (z-index: 1) and stacks
+   children vertically, centered horizontally.
+   ============================================================ */
 .page {
   position: relative;
   z-index: 1;
@@ -76,8 +80,11 @@ body {
   justify-content: flex-start;
   padding: 2.5rem 1.5rem 4rem;
 }
-
-/* ── HEADER ── */
+/* ============================================================
+   HEADER — Logo, brand name, page title, and subtitle
+   Slides in from above on load via fadeDown animation.
+   The logo links back to the main site.
+   ============================================================ */
 .header {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -114,13 +121,19 @@ body {
   font-weight: 300;
   letter-spacing: 0.05em;
 }
-
-/* ── PROGRESS ── */
+/* ============================================================
+   PROGRESS INDICATOR — Step tracker shown above the form card
+   Horizontal row of numbered dots connected by thin lines.
+   JS adds .active (current step) and .completed (past step)
+   to each .step-dot to drive the gold highlight states.
+   Fades out when the success panel is shown.
+   ============================================================ */
 .progress-wrap {
   width: 100%;
   max-width: 580px;
   margin-bottom: 2rem;
   animation: fadeDown 0.6s 0.1s ease both;
+  transition: opacity 0.4s;
 }
 .progress-steps {
   display: flex;
@@ -184,8 +197,11 @@ body {
 }
 .step-dot.active .dot-label { color: var(--gold); }
 .step-dot.completed .dot-label { color: rgba(255,255,255,0.5); }
-
-/* ── CARD ── */
+/* ============================================================
+   FORM CARD — Frosted-glass container that holds all step panels
+   The ::before pseudo-element adds a gold gradient top border
+   to give the card a subtle premium accent line.
+   ============================================================ */
 .form-card {
   width: 100%;
   max-width: 580px;
@@ -205,8 +221,10 @@ body {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
-
-/* Step panels */
+/* ── Step panels ──
+   Only the .active panel is visible at a time.
+   JS swaps the .active class when the user navigates steps.
+   slideIn animates the incoming panel from right to centre. */
 .step-panel { display: none; }
 .step-panel.active {
   display: block;
@@ -216,10 +234,7 @@ body {
   from { opacity: 0; transform: translateX(20px); }
   to { opacity: 1; transform: translateX(0); }
 }
-
-.step-heading {
-  margin-bottom: 1.8rem;
-}
+.step-heading { margin-bottom: 1.8rem; }
 .step-eyebrow {
   font-size: 0.6rem;
   letter-spacing: 0.25em;
@@ -242,8 +257,12 @@ body {
   font-weight: 300;
   line-height: 1.6;
 }
-
-/* ── FIELDS ── */
+/* ============================================================
+   FORM FIELDS — Labels, inputs, selects, and textareas
+   All controls share the same dark-glass base style.
+   .field-row uses a two-column grid for side-by-side pairs.
+   .req marks required-field asterisks gold.
+   ============================================================ */
 .field-group { margin-bottom: 1.4rem; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 label {
@@ -256,7 +275,6 @@ label {
   margin-bottom: 0.5rem;
 }
 label .req { color: var(--gold); margin-left: 2px; }
-
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -293,8 +311,12 @@ select {
 }
 select option { background: var(--navy-mid); color: white; }
 textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
-
-/* ── DESTINATION TILES ── */
+/* ============================================================
+   DESTINATION TILES — Step 2 radio-button grid
+   Hidden <input type="radio"> elements are visually replaced
+   by styled <label> tiles. The :checked + label sibling
+   selector applies the gold selected state without JS.
+   ============================================================ */
 .dest-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -334,8 +356,11 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   line-height: 1.3;
 }
 .dest-option:checked + .dest-label .dest-name { color: var(--gold); }
-
-/* ── BUDGET TILES ── */
+/* ============================================================
+   BUDGET TILES — Step 3 two-column radio-button grid
+   Same hidden-input + styled-label pattern as destination tiles,
+   but laid out in two columns and sized for price range text.
+   ============================================================ */
 .budget-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -375,8 +400,11 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   color: rgba(255,255,255,0.4);
   font-weight: 300;
 }
-
-/* ── TRAVELER COUNTER ── */
+/* ============================================================
+   TRAVELER COUNTER — Step 3 adults / children stepper rows
+   Each row has a label on the left and a +/− counter on the
+   right. JS in adjust() keeps values ≥ 0 (adults ≥ 1).
+   ============================================================ */
 .traveler-row {
   display: flex;
   align-items: center;
@@ -425,8 +453,11 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   min-width: 24px;
   text-align: center;
 }
-
-/* ── OCCASION ── */
+/* ============================================================
+   OCCASION CHIPS — Step 3 special-occasion radio grid
+   Compact three-column chip layout. Follows the same
+   hidden-input + styled-label pattern as the other tile grids.
+   ============================================================ */
 .occasion-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -453,8 +484,13 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   background: var(--gold-pale);
   color: var(--gold);
 }
-
-/* ── BUTTONS ── */
+/* ============================================================
+   BUTTONS — Navigation and submit controls
+   .btn-row: flex row that spaces Back and Next/Submit side by side.
+   .btn-back: ghost style, secondary action.
+   .btn-next: gold-fill primary action; flex: 1 so it fills space.
+              :disabled state prevents double-submission.
+   ============================================================ */
 .btn-row {
   display: flex;
   gap: 1rem;
@@ -497,8 +533,12 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
 }
 .btn-next:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
 .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-/* ── SUCCESS ── */
+/* ============================================================
+   SUCCESS PANEL — Shown after a confirmed form submission
+   Replaces all step panels. The pulsing gold icon provides
+   positive visual feedback, and .success-detail shows the
+   client's email and a direct contact phone number.
+   ============================================================ */
 .success-panel {
   display: none;
   text-align: center;
@@ -571,8 +611,39 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   transition: all 0.2s;
 }
 .btn-home:hover { background: var(--gold-pale); border-color: var(--gold); }
-
-/* ── ANIMATIONS ── */
+/* ============================================================
+   ERROR MESSAGE — Submission failure notice below Step 4 buttons
+   Hidden by default (display: none). JS sets display: block on
+   fetch failure or a non-success response from Web3Forms.
+   Uses a red-tinted background and left accent border so it
+   stands out clearly without being jarring on the dark theme.
+   The ⚠ icon prefix is injected via ::before to keep the HTML clean.
+   ============================================================ */
+.error-msg {
+  display: none;                              /* shown by JS on failure */
+  margin-top: 1.25rem;
+  padding: 0.9rem 1rem 0.9rem 1.1rem;
+  background: rgba(231, 76, 60, 0.12);
+  border: 1px solid rgba(231, 76, 60, 0.35);
+  border-left: 3px solid rgba(231, 76, 60, 0.75); /* strong left accent */
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #ffb3ae;                             /* soft red, readable on navy */
+  line-height: 1.55;
+  animation: fadeUp 0.3s ease forwards;
+}
+.error-msg::before {
+  content: '⚠ ';                             /* warning icon prefix */
+  font-style: normal;
+}
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   fadeDown  — header/progress slide in from above on page load
+   fadeUp    — form card and success panel rise from below
+   slideIn   — each new step panel slides in from the right
+   pulse     — success icon glows rhythmically after submission
+   ============================================================ */
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-15px); }
   to { opacity: 1; transform: translateY(0); }
@@ -581,8 +652,11 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-/* ── RESPONSIVE ── */
+/* ============================================================
+   RESPONSIVE — Mobile breakpoint (≤ 600 px)
+   Collapses two-column field rows and tile grids to single
+   column, and reduces card padding for smaller screens.
+   ============================================================ */
 @media (max-width: 600px) {
   .form-card { padding: 1.75rem 1.25rem; }
   .field-row { grid-template-columns: 1fr; }
@@ -610,7 +684,7 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   </div>
 
   <!-- PROGRESS -->
-  <div class="progress-wrap">
+  <div class="progress-wrap" id="progress-wrap">
     <div class="progress-steps">
       <div class="step-dot active" id="dot-1">
         <div class="dot-circle">1</div>
@@ -641,7 +715,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <h2>Tell me about <em>yourself</em></h2>
         <p>Just the basics so I know how to reach you.</p>
       </div>
-
       <div class="field-group">
         <label>Full Name <span class="req">*</span></label>
         <input type="text" id="name" placeholder="Your full name" autocomplete="name">
@@ -656,7 +729,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
           <input type="tel" id="phone" placeholder="(000) 000-0000" autocomplete="tel">
         </div>
       </div>
-
       <div class="btn-row">
         <button class="btn-next" onclick="goTo(2)">Continue →</button>
       </div>
@@ -669,39 +741,29 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <h2>Where would you like to <em>go?</em></h2>
         <p>Select all that interest you — we can narrow it down together.</p>
       </div>
-
       <div class="field-group">
         <label>Choose Your Destination <span class="req">*</span></label>
         <div class="dest-grid">
           <input type="radio" name="destination" id="d1" value="Walt Disney World" class="dest-option">
           <label for="d1" class="dest-label"><span class="dest-icon">🏰</span><span class="dest-name">Walt Disney World</span></label>
-
           <input type="radio" name="destination" id="d2" value="Disney Cruise Line" class="dest-option">
           <label for="d2" class="dest-label"><span class="dest-icon">🚢</span><span class="dest-name">Disney Cruise Line</span></label>
-
           <input type="radio" name="destination" id="d3" value="Disneyland" class="dest-option">
           <label for="d3" class="dest-label"><span class="dest-icon">⭐</span><span class="dest-name">Disneyland Resort</span></label>
-
           <input type="radio" name="destination" id="d4" value="Aulani" class="dest-option">
           <label for="d4" class="dest-label"><span class="dest-icon">🌺</span><span class="dest-name">Aulani Hawaii</span></label>
-
           <input type="radio" name="destination" id="d5" value="Adventures by Disney" class="dest-option">
           <label for="d5" class="dest-label"><span class="dest-icon">🌍</span><span class="dest-name">Adventures by Disney</span></label>
-
           <input type="radio" name="destination" id="d6" value="All-Inclusive Resort" class="dest-option">
           <label for="d6" class="dest-label"><span class="dest-icon">🍹</span><span class="dest-name">All-Inclusive Resort</span></label>
-
           <input type="radio" name="destination" id="d7" value="Universal Orlando" class="dest-option">
           <label for="d7" class="dest-label"><span class="dest-icon">🎢</span><span class="dest-name">Universal Orlando</span></label>
-
           <input type="radio" name="destination" id="d8" value="Non-Disney Cruise" class="dest-option">
           <label for="d8" class="dest-label"><span class="dest-icon">⚓</span><span class="dest-name">Other Cruise Line</span></label>
-
           <input type="radio" name="destination" id="d9" value="Not Sure Yet" class="dest-option">
           <label for="d9" class="dest-label"><span class="dest-icon">✨</span><span class="dest-name">Not Sure Yet</span></label>
         </div>
       </div>
-
       <div class="btn-row">
         <button class="btn-back" onclick="goTo(1)">← Back</button>
         <button class="btn-next" onclick="goTo(3)">Continue →</button>
@@ -715,7 +777,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <h2>Tell me about your <em>trip</em></h2>
         <p>Help me understand who's going and when.</p>
       </div>
-
       <div class="field-group">
         <label>Who's Coming?</label>
         <div class="traveler-row">
@@ -741,7 +802,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
           </div>
         </div>
       </div>
-
       <div class="field-row">
         <div class="field-group">
           <label>Preferred Travel Date</label>
@@ -760,7 +820,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
           </select>
         </div>
       </div>
-
       <div class="field-group">
         <label>Estimated Budget</label>
         <div class="budget-grid">
@@ -769,31 +828,26 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
             <div class="budget-amount">$1,500 – $3,000</div>
             <div class="budget-desc">Value focused</div>
           </label>
-
           <input type="radio" name="budget" id="b2" value="$3,000 – $5,000" class="budget-option">
           <label for="b2" class="budget-label">
             <div class="budget-amount">$3,000 – $5,000</div>
             <div class="budget-desc">Moderate comfort</div>
           </label>
-
           <input type="radio" name="budget" id="b3" value="$5,000 – $8,000" class="budget-option">
           <label for="b3" class="budget-label">
             <div class="budget-amount">$5,000 – $8,000</div>
             <div class="budget-desc">Premium experience</div>
           </label>
-
           <input type="radio" name="budget" id="b4" value="$8,000 – $12,000" class="budget-option">
           <label for="b4" class="budget-label">
             <div class="budget-amount">$8,000 – $12,000</div>
             <div class="budget-desc">Luxury getaway</div>
           </label>
-
           <input type="radio" name="budget" id="b5" value="$12,000+" class="budget-option">
           <label for="b5" class="budget-label">
             <div class="budget-amount">$12,000+</div>
             <div class="budget-desc">No limit, all out</div>
           </label>
-
           <input type="radio" name="budget" id="b6" value="No set budget" class="budget-option">
           <label for="b6" class="budget-label">
             <div class="budget-amount">Flexible</div>
@@ -801,30 +855,23 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
           </label>
         </div>
       </div>
-
       <div class="field-group">
         <label>Special Occasion?</label>
         <div class="occasion-grid">
           <input type="radio" name="occasion" id="occ0" value="None" class="occ-option">
           <label for="occ0" class="occ-label">Just a Vacation</label>
-
           <input type="radio" name="occasion" id="occ1" value="Birthday" class="occ-option">
           <label for="occ1" class="occ-label">🎂 Birthday</label>
-
           <input type="radio" name="occasion" id="occ2" value="Anniversary" class="occ-option">
           <label for="occ2" class="occ-label">💍 Anniversary</label>
-
           <input type="radio" name="occasion" id="occ3" value="Honeymoon" class="occ-option">
           <label for="occ3" class="occ-label">🥂 Honeymoon</label>
-
           <input type="radio" name="occasion" id="occ4" value="First Disney Trip" class="occ-option">
           <label for="occ4" class="occ-label">✨ First Disney Trip</label>
-
           <input type="radio" name="occasion" id="occ5" value="Family Reunion" class="occ-option">
           <label for="occ5" class="occ-label">👨‍👩‍👧‍👦 Family Reunion</label>
         </div>
       </div>
-
       <div class="btn-row">
         <button class="btn-back" onclick="goTo(2)">← Back</button>
         <button class="btn-next" onclick="goTo(4)">Continue →</button>
@@ -838,12 +885,10 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <h2>Anything else I should <em>know?</em></h2>
         <p>Share any details, wishes, or questions — the more I know, the better I can plan!</p>
       </div>
-
       <div class="field-group">
         <label>Tell Me About Your Dream Trip</label>
         <textarea id="notes" placeholder="E.g. We have two young kids who love princesses, we'd love a character dining experience, we're flexible on dates but prefer weekdays..."></textarea>
       </div>
-
       <div class="field-group">
         <label>How Did You Hear About Us?</label>
         <select id="referral">
@@ -856,11 +901,11 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
           <option>Other</option>
         </select>
       </div>
-
       <div class="btn-row">
         <button class="btn-back" onclick="goTo(3)">← Back</button>
-        <button class="btn-next" onclick="submitForm()">✨ Send My Request</button>
+        <button class="btn-next" id="submit-btn" onclick="submitForm()">✨ Send My Request</button>
       </div>
+      <div class="error-msg" id="error-msg">Something went wrong. Please try again or email us directly at anthonybia888@gmail.com</div>
     </div>
 
     <!-- SUCCESS -->
@@ -898,26 +943,23 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       if (!name || !email) {
-        highlight(['name', 'email'], name, email);
+        highlight(name, email);
         return;
       }
     }
-
     // Hide all panels
     document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('step-' + step).classList.add('active');
-
     // Update dots
     document.querySelectorAll('.step-dot').forEach((dot, i) => {
       dot.classList.remove('active', 'completed');
       if (i + 1 < step) dot.classList.add('completed');
       if (i + 1 === step) dot.classList.add('active');
     });
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function highlight(fields, name, email) {
+  function highlight(name, email) {
     if (!name) document.getElementById('name').style.borderColor = '#e74c3c';
     else document.getElementById('name').style.borderColor = '';
     if (!email) document.getElementById('email').style.borderColor = '#e74c3c';
@@ -928,21 +970,80 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
     }, 2000);
   }
 
-  function submitForm() {
-    const name = document.getElementById('name').value.trim() || 'friend';
-    const email = document.getElementById('email').value.trim() || 'your email';
+  async function submitForm() {
+    const name   = document.getElementById('name').value.trim() || 'friend';
+    const email  = document.getElementById('email').value.trim() || 'your email';
+    const phone  = document.getElementById('phone').value.trim() || 'Not provided';
+    const dest   = document.querySelector('input[name="destination"]:checked')?.value || 'Not selected';
+    const tDate  = document.getElementById('travel-date').value || 'Not specified';
+    const tLen   = document.getElementById('trip-length').value || 'Not specified';
+    const budget = document.querySelector('input[name="budget"]:checked')?.value || 'Not selected';
+    const occ    = document.querySelector('input[name="occasion"]:checked')?.value || 'None';
+    const notes  = document.getElementById('notes').value.trim() || 'None';
+    const ref    = document.getElementById('referral').value || 'Not specified';
 
-    // Show success
-    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.step-dot').forEach(d => d.classList.add('completed'));
-    document.getElementById('success').classList.add('active');
-    document.getElementById('success-name').textContent = name.split(' ')[0];
-    document.getElementById('success-email').textContent = email;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    document.getElementById('error-msg').style.display = 'none';
 
-    // Hide progress bar
-    document.querySelector('.progress-wrap').style.opacity = '0';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '3e938971-822b-4ea9-a89b-b7ef41b5770b',
+          subject: '✨ New Quote Request from ' + name + ' — Shield & Castle Travel',
+          from_name: 'Shield & Castle Travel Form',
+          name: name,
+          email: email,
+          message:
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            '🧳 NEW VACATION QUOTE REQUEST\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+            '👤 CLIENT INFO\n' +
+            'Name:    ' + name + '\n' +
+            'Email:   ' + email + '\n' +
+            'Phone:   ' + phone + '\n\n' +
+            '🏰 DESTINATION\n' +
+            dest + '\n\n' +
+            '👨‍👩‍👧 TRAVELERS\n' +
+            'Adults:   ' + adults + '\n' +
+            'Children: ' + children + '\n\n' +
+            '📅 TRIP DETAILS\n' +
+            'Travel Date:  ' + tDate + '\n' +
+            'Trip Length:  ' + tLen + '\n' +
+            'Budget:       ' + budget + '\n' +
+            'Occasion:     ' + occ + '\n\n' +
+            '📝 NOTES FROM CLIENT\n' +
+            notes + '\n\n' +
+            '📣 HOW THEY FOUND US\n' +
+            ref + '\n\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+        })
+      });
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      const data = await res.json();
+
+      if (data.success) {
+        // Show success panel
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.step-dot').forEach(d => d.classList.add('completed'));
+        document.getElementById('success').classList.add('active');
+        document.getElementById('success-name').textContent = name.split(' ')[0];
+        document.getElementById('success-email').textContent = email;
+        document.getElementById('progress-wrap').style.opacity = '0';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '✨ Send My Request';
+      }
+    } catch (err) {
+      document.getElementById('error-msg').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '✨ Send My Request';
+    }
   }
 
   // Remove red border on input
@@ -950,5 +1051,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
     el.addEventListener('input', () => el.style.borderColor = '');
   });
 </script>
+
 </body>
 </html>
