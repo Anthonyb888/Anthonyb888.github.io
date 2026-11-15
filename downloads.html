@@ -1,77 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Downloads - Shield and Castle Travel Agency</title>
-  <link href="https://fonts.cdnfonts.com/css/waltograph" rel="stylesheet" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f8ff;
-      margin: 0; padding: 2rem; color: #333;
-    }
-    header {
-      background: #004085;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-family: 'Waltograph', cursive;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1 {
-      font-family: 'Mouse Memoirs', cursive;
-      color: #004085;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    ul.download-list {
-      list-style: none;
-      padding: 0;
-    }
-    ul.download-list li {
-      margin-bottom: 1rem;
-    }
-    ul.download-list a {
-      color: #004085;
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid #004085;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      display: inline-block;
-      transition: background-color 0.3s ease;
-    }
-    ul.download-list a:hover {
-      background-color: #004085;
-      color: white;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Park Maps & Guides | Shield & Castle Travel</title>
+<meta name="description" content="Free downloadable Disney park maps, dining guide and resort summaries from Shield & Castle Travel.">
+<meta property="og:title" content="Free Disney Park Maps & Guides | Shield & Castle Travel">
+<meta property="og:description" content="Download park maps, the WDW dining guide and resort summaries — free.">
+<meta property="og:image" content="https://anthonyb888.github.io/og-image.jpg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d1f3c;
+    --navy-mid: #162847;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --cream: #f9f5ee;
+    --warm-white: #fefcf8;
+    --text-mid: #3d3d5c;
+    --text-light: #7a7a9a;
+  }
+  body { font-family: 'Montserrat', sans-serif; background: var(--warm-white); color: var(--text-mid); }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  header {
+    background: var(--navy);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+  .brand img { height: 50px; width: auto; }
+  .brand span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600; color: var(--gold);
+  }
+  .brand span em { font-style: normal; color: #fff; font-weight: 300; }
+  .header-cta {
+    background: var(--gold); color: var(--navy);
+    padding: 0.6rem 1.2rem; border-radius: 2px;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+  }
+  .header-cta:hover { background: var(--gold-light); }
+
+  .intro { text-align: center; padding: 4rem 1.5rem 2.5rem; }
+  .label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 300; color: var(--navy); line-height: 1.15;
+  }
+  h1 em { font-style: italic; }
+  .divider { width: 48px; height: 2px; background: var(--gold); margin: 1.5rem auto; }
+  .intro p { font-size: 0.85rem; color: var(--text-light); line-height: 1.9; max-width: 520px; margin: 0 auto; font-weight: 300; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; color: var(--navy);
+    margin: 2.5rem 0 1rem;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .dl {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .dl:hover { background: #f3ecdd; transform: translateY(-2px); }
+  .dl strong { display: block; color: var(--navy); font-size: 0.85rem; font-weight: 600; }
+  .dl small { font-size: 0.68rem; color: var(--text-light); }
+  .dl .arrow { color: var(--gold); font-size: 1.1rem; flex-shrink: 0; }
+
+  .cta {
+    background: var(--navy); color: #fff; text-align: center;
+    padding: 3.5rem 1.5rem; margin-top: 3rem; border-radius: 4px;
+  }
+  .cta h2 { color: #fff; margin: 0 0 0.75rem; font-size: 1.9rem; font-weight: 300; }
+  .cta h2 em { color: var(--gold-light); }
+  .cta p { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-bottom: 1.75rem; font-weight: 300; line-height: 1.8; }
+  .btn {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    padding: 0.9rem 2.2rem; border-radius: 2px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+  }
+  .btn:hover { background: var(--gold-light); }
+
+  footer {
+    background: #080f1e; padding: 2rem; text-align: center;
+    font-size: 0.68rem; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; line-height: 2;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    header { padding: 0.75rem 1.25rem; }
+    .brand img { height: 40px; }
+    .brand span { display: none; }
+  }
+</style>
 </head>
 <body>
-  <header>Shield and Castle Travel Agency - Downloads</header>
+
+<header>
+  <a class="brand" href="index.html">
+    <img src="Shield-and-Castle-Logo.png" alt="Shield and Castle Travel logo">
+    <span>Shield <em>&</em> Castle</span>
+  </a>
+  <a class="header-cta" href="quote.html">Get a Quote</a>
+</header>
+
+<section class="intro">
+  <p class="label">Free Planning Resources</p>
+  <h1>Park Maps <em>&</em> Guides</h1>
+  <div class="divider"></div>
+  <p>Download these to start planning — then let me put it all together for you, at no cost.</p>
+</section>
+
 <main>
-  <h1>Downloadable Resources</h1>
-  <ul class="download-list">
-    <li><a href="WDW-Dining-Guide.pdf" download>WDW Dining Guide</a></li>
-    <li><a href="WDW-Resort-Summaries.pdf" download>WDW Resort Summaries</a></li>
-    <li><a href="MAGIC-KINGDOM-MAP.pdf" download>Magic Kingdom Map</a></li>
-    <li><a href="EPCOT-map-Disney-World.pdf" download>EPCOT Map</a></li>
-    <li><a href="Disney-World-Disneys-Hollywood-Studios-map.pdf" download>Hollywood Studios Map</a></li>
-    <li><a href="Animal-Kingdom-map.pdf" download>Animal Kingdom Map</a></li>
-    <li><a href="Disney-World-Water-Parks-maps.pdf" download>Disney World Water Parks Maps</a></li>
-    <li><a href="Disney-Springs-guidemap.pdf" download>Disney Springs Guide Map</a></li>
-    <li><a href="Disneyland-Park.pdf" download>Disneyland Park Map</a></li>
-    <li><a href="Disney-California-Adventure.pdf" download>Disney California Adventure Map</a></li>
-  </ul>
-    <p style="text-align:center; margin-top: 2rem;">
-      <a href="index.html" style="color: #004085; text-decoration: underline;">← Back to Home</a>
-    </p>
-  </main>
+  <h2>Walt Disney World Planning</h2>
+  <div class="grid">
+    <a class="dl" href="WDW-Dining-Guide.pdf" download><div><strong>WDW Dining Guide</strong><small>PDF · 1.1 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="WDW-Resort-Summaries.pdf" download><div><strong>WDW Resort Summaries</strong><small>PDF · 7.6 MB</small></div><span class="arrow">↓</span></a>
+  </div>
+
+  <h2>Walt Disney World Maps</h2>
+  <div class="grid">
+    <a class="dl" href="MAGIC-KINGDOM-MAP.pdf" download><div><strong>Magic Kingdom</strong><small>PDF · 4.7 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="EPCOT-map-Disney-World.pdf" download><div><strong>EPCOT</strong><small>PDF · 3.3 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="Disney-World-Disneys-Hollywood-Studios-map.pdf" download><div><strong>Hollywood Studios</strong><small>PDF · 1.4 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="Animal-Kingdom-map.pdf" download><div><strong>Animal Kingdom</strong><small>PDF · 3.2 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="Disney-World-Water-Parks-maps.pdf" download><div><strong>Water Parks</strong><small>PDF · 1.5 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="Disney-Springs-guidemap.pdf" download><div><strong>Disney Springs</strong><small>PDF · 2.6 MB</small></div><span class="arrow">↓</span></a>
+  </div>
+
+  <h2>Disneyland Resort Maps</h2>
+  <div class="grid">
+    <a class="dl" href="Disneyland-Park.pdf" download><div><strong>Disneyland Park</strong><small>PDF · 2.4 MB</small></div><span class="arrow">↓</span></a>
+    <a class="dl" href="Disney-California-Adventure.pdf" download><div><strong>Disney California Adventure</strong><small>PDF · 2.5 MB</small></div><span class="arrow">↓</span></a>
+  </div>
+
+  <div class="cta">
+    <h2>Rather have it <em>planned for you?</em></h2>
+    <p>Resorts, dining, Lightning Lane strategy and day-by-day park plans — fee-free.</p>
+    <a class="btn" href="quote.html">Get Your Free Quote →</a>
+  </div>
+</main>
+
+<footer>
+  <a href="index.html">← Back to Home</a><br>
+  © <span id="year">2026</span> Shield and Castle Travel Agency · Anthony Biagini
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

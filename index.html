@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shield & Castle Travel | Disney Vacation Experts</title>
+<meta name="description" content="Fee-free Disney vacation planning from a Disney College of Knowledge graduate. Walt Disney World, Disney Cruise Line, Disneyland, Aulani, Universal, cruises and all-inclusive resorts.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shield & Castle Travel | Disney Vacation Experts">
+<meta property="og:description" content="Fee-free, personalized Disney vacation planning. Get your free quote.">
+<meta property="og:url" content="https://anthonyb888.github.io/">
+<meta property="og:image" content="https://anthonyb888.github.io/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -73,6 +82,30 @@
     letter-spacing: 0.18em !important;
   }
   .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+  .nav-brand { display: flex; align-items: center; gap: 0.75rem; }
+  .nav-brand img { height: 65px; width: auto; }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 2px;
+    width: 44px; height: 44px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 20px; height: 2px;
+    background: var(--gold);
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
 
   /* ── HERO ── */
   .hero {
@@ -287,8 +320,7 @@
   .about-img-frame {
     width: 100%;
     aspect-ratio: 3/4;
-    background: url('https://anthonyb888.github.io/disney-castle.jpg') center/cover,
-                linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
     border-radius: 4px;
     position: relative;
     overflow: hidden;
@@ -591,8 +623,25 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
+    nav { padding: 0.75rem 1.25rem; }
+    .nav-brand img { height: 48px; }
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(13, 31, 60, 0.98);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 0.5rem 1.5rem 1.5rem;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li a { display: block; padding: 1rem 0; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-links li:last-child a { border-bottom: none; margin-top: 1rem; text-align: center; padding: 0.9rem; }
+    .hero-btns { flex-direction: column; align-items: stretch; }
+    .hero-btns a { text-align: center; }
+    .trust-bar { flex-direction: column; align-items: flex-start; }
     section, .about { padding: 4rem 1.5rem; }
     .about { grid-template-columns: 1fr; gap: 3rem; }
     .dest-grid { grid-template-columns: repeat(2, 1fr); }
@@ -615,14 +664,18 @@
 
 <!-- NAV -->
 <nav>
-  <div style="display:flex; align-items:center; gap:0.75rem;">
-    <a href="#"><img src="https://anthonyb888.github.io/Shield-and-Castle-Logo.png" alt="Shield and Castle" style="height: 65px;"></a>
+  <div class="nav-brand">
+    <a href="#"><img src="Shield-and-Castle-Logo.png" alt="Shield and Castle Travel logo"></a>
     <a href="#" class="nav-logo">Shield <span>&</span> Castle</a>
   </div>
-  <ul class="nav-links">
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#destinations">Destinations</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="downloads.html">Free Guides</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="https://anthonyb888.github.io/quote.html" class="nav-cta">Get a Quote</a></li>
   </ul>
@@ -719,7 +772,7 @@
     <div class="svc-card">
       <span class="svc-icon">🗺️</span>
       <h3>Custom Itineraries</h3>
-      <p>Personalized park plans including Genie+, Lightning Lane, and insider strategies to maximize every minute of your trip.</p>
+      <p>Personalized park plans including Lightning Lane Multi Pass and Single Pass strategy, plus insider tips to maximize every minute of your trip.</p>
     </div>
     <div class="svc-card">
       <span class="svc-icon">🏰</span>
@@ -776,21 +829,21 @@
     <p class="section-sub">Disney is just the beginning. Explore a world of vacation options for every traveler and every dream.</p>
   </div>
   <div class="beyond-grid reveal">
-    <a class="beyond-card" href="#">
+    <a class="beyond-card" href="quote.html?dest=All-Inclusive%20Resort">
       <img src="https://anthonyb888.github.io/sandals.jpg" alt="All-Inclusive Resorts" loading="lazy">
       <div class="beyond-label">
         <h3>All-Inclusive Resorts</h3>
         <p>Sandals & Beyond</p>
       </div>
     </a>
-    <a class="beyond-card" href="#">
+    <a class="beyond-card" href="quote.html?dest=Universal%20Orlando">
       <img src="https://anthonyb888.github.io/universal.jpg" alt="Universal Theme Parks" loading="lazy">
       <div class="beyond-label">
         <h3>Big Thrills</h3>
         <p>Universal & More</p>
       </div>
     </a>
-    <a class="beyond-card" href="#">
+    <a class="beyond-card" href="quote.html?dest=Non-Disney%20Cruise">
       <img src="https://anthonyb888.github.io/cruiseo.jpg" alt="Cruise Adventures" loading="lazy">
       <div class="beyond-label">
         <h3>Epic Adventures</h3>
@@ -831,10 +884,30 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Shield <span>&</span> Castle <span style="font-family:Montserrat;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;">Travel Agency</span></div>
-  <p>© 2025 Shield and Castle Travel Agency · Anthony Biagini · Disney Travel Expert</p>
+  <p><a href="downloads.html" style="color:var(--gold);text-decoration:none;">Free Park Maps & Guides</a></p>
+  <p>© <span id="year">2026</span> Shield and Castle Travel Agency · Anthony Biagini · Disney Travel Expert</p>
 </footer>
 
 <script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  navLinks.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open menu');
+    }
+  });
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {

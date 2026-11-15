@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get a Quote | Shield & Castle Travel</title>
+<meta name="description" content="Request a free, fee-free vacation quote from Shield & Castle Travel. Disney, Universal, cruises and all-inclusive resorts.">
+<meta property="og:title" content="Get a Free Vacation Quote | Shield & Castle Travel">
+<meta property="og:description" content="Four quick steps, under two minutes, 100% free.">
+<meta property="og:image" content="https://anthonyb888.github.io/og-image.jpg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -323,7 +329,27 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   gap: 0.75rem;
   margin-top: 0.5rem;
 }
-.dest-option { display: none; }
+/* Visually hidden but still focusable by keyboard and screen readers */
+.dest-option, .budget-option, .occ-option {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.dest-option:focus-visible + .dest-label,
+.budget-option:focus-visible + .budget-label,
+.occ-option:focus-visible + .occ-label {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 2px;
+}
+button:focus-visible, a:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+.field-error {
+  display: none;
+  font-size: 0.68rem;
+  color: #ffb3ae;
+  margin-top: 0.4rem;
+}
+.field-error.show { display: block; }
 .dest-label {
   display: flex;
   flex-direction: column;
@@ -367,7 +393,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   gap: 0.75rem;
   margin-top: 0.5rem;
 }
-.budget-option { display: none; }
 .budget-label {
   display: flex;
   flex-direction: column;
@@ -464,7 +489,6 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   gap: 0.6rem;
   margin-top: 0.5rem;
 }
-.occ-option { display: none; }
 .occ-label {
   padding: 0.7rem 0.5rem;
   border: 1px solid rgba(255,255,255,0.1);
@@ -676,7 +700,7 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
   <!-- HEADER -->
   <div class="header">
     <a href="https://anthonyb888.github.io/index.html">
-      <img src="https://anthonyb888.github.io/Shield-and-Castle-Logo.png" alt="Shield and Castle">
+      <img src="Shield-and-Castle-Logo.png" alt="Shield and Castle">
       <div class="header-brand">Shield <span>&</span> Castle</div>
     </a>
     <h1>Plan Your <em>Dream</em> Vacation</h1>
@@ -716,21 +740,23 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <p>Just the basics so I know how to reach you.</p>
       </div>
       <div class="field-group">
-        <label>Full Name <span class="req">*</span></label>
-        <input type="text" id="name" placeholder="Your full name" autocomplete="name">
+        <label for="name">Full Name <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Your full name" autocomplete="name" required aria-describedby="name-error">
+        <div class="field-error" id="name-error" role="alert">Please enter your name.</div>
       </div>
       <div class="field-row">
         <div class="field-group">
-          <label>Email Address <span class="req">*</span></label>
-          <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required aria-describedby="email-error">
+          <div class="field-error" id="email-error" role="alert">Please enter a valid email address.</div>
         </div>
         <div class="field-group">
-          <label>Phone Number</label>
+          <label for="phone">Phone Number</label>
           <input type="tel" id="phone" placeholder="(000) 000-0000" autocomplete="tel">
         </div>
       </div>
       <div class="btn-row">
-        <button class="btn-next" onclick="goTo(2)">Continue →</button>
+        <button type="button" class="btn-next" onclick="goTo(2)">Continue →</button>
       </div>
     </div>
 
@@ -739,34 +765,34 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
       <div class="step-heading">
         <div class="step-eyebrow">Step 2 of 4</div>
         <h2>Where would you like to <em>go?</em></h2>
-        <p>Select all that interest you — we can narrow it down together.</p>
+        <p>Pick as many as interest you — we can narrow it down together.</p>
       </div>
       <div class="field-group">
-        <label>Choose Your Destination <span class="req">*</span></label>
-        <div class="dest-grid">
-          <input type="radio" name="destination" id="d1" value="Walt Disney World" class="dest-option">
+        <label id="dest-heading">Choose Your Destination(s)</label>
+        <div class="dest-grid" role="group" aria-labelledby="dest-heading">
+          <input type="checkbox" name="destination" id="d1" value="Walt Disney World" class="dest-option">
           <label for="d1" class="dest-label"><span class="dest-icon">🏰</span><span class="dest-name">Walt Disney World</span></label>
-          <input type="radio" name="destination" id="d2" value="Disney Cruise Line" class="dest-option">
+          <input type="checkbox" name="destination" id="d2" value="Disney Cruise Line" class="dest-option">
           <label for="d2" class="dest-label"><span class="dest-icon">🚢</span><span class="dest-name">Disney Cruise Line</span></label>
-          <input type="radio" name="destination" id="d3" value="Disneyland" class="dest-option">
+          <input type="checkbox" name="destination" id="d3" value="Disneyland" class="dest-option">
           <label for="d3" class="dest-label"><span class="dest-icon">⭐</span><span class="dest-name">Disneyland Resort</span></label>
-          <input type="radio" name="destination" id="d4" value="Aulani" class="dest-option">
+          <input type="checkbox" name="destination" id="d4" value="Aulani" class="dest-option">
           <label for="d4" class="dest-label"><span class="dest-icon">🌺</span><span class="dest-name">Aulani Hawaii</span></label>
-          <input type="radio" name="destination" id="d5" value="Adventures by Disney" class="dest-option">
+          <input type="checkbox" name="destination" id="d5" value="Adventures by Disney" class="dest-option">
           <label for="d5" class="dest-label"><span class="dest-icon">🌍</span><span class="dest-name">Adventures by Disney</span></label>
-          <input type="radio" name="destination" id="d6" value="All-Inclusive Resort" class="dest-option">
+          <input type="checkbox" name="destination" id="d6" value="All-Inclusive Resort" class="dest-option">
           <label for="d6" class="dest-label"><span class="dest-icon">🍹</span><span class="dest-name">All-Inclusive Resort</span></label>
-          <input type="radio" name="destination" id="d7" value="Universal Orlando" class="dest-option">
+          <input type="checkbox" name="destination" id="d7" value="Universal Orlando" class="dest-option">
           <label for="d7" class="dest-label"><span class="dest-icon">🎢</span><span class="dest-name">Universal Orlando</span></label>
-          <input type="radio" name="destination" id="d8" value="Non-Disney Cruise" class="dest-option">
+          <input type="checkbox" name="destination" id="d8" value="Non-Disney Cruise" class="dest-option">
           <label for="d8" class="dest-label"><span class="dest-icon">⚓</span><span class="dest-name">Other Cruise Line</span></label>
-          <input type="radio" name="destination" id="d9" value="Not Sure Yet" class="dest-option">
+          <input type="checkbox" name="destination" id="d9" value="Not Sure Yet" class="dest-option">
           <label for="d9" class="dest-label"><span class="dest-icon">✨</span><span class="dest-name">Not Sure Yet</span></label>
         </div>
       </div>
       <div class="btn-row">
-        <button class="btn-back" onclick="goTo(1)">← Back</button>
-        <button class="btn-next" onclick="goTo(3)">Continue →</button>
+        <button type="button" class="btn-back" onclick="goTo(1)">← Back</button>
+        <button type="button" class="btn-next" onclick="goTo(3)">Continue →</button>
       </div>
     </div>
 
@@ -778,16 +804,16 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <p>Help me understand who's going and when.</p>
       </div>
       <div class="field-group">
-        <label>Who's Coming?</label>
+        <label id="travelers-heading">Who's Coming?</label>
         <div class="traveler-row">
           <div class="traveler-info">
             <div class="traveler-name">Adults</div>
             <div class="traveler-sub">Age 18+</div>
           </div>
           <div class="counter">
-            <button class="counter-btn" onclick="adjust('adults', -1)">−</button>
-            <span class="counter-val" id="adults-val">2</span>
-            <button class="counter-btn" onclick="adjust('adults', 1)">+</button>
+            <button type="button" class="counter-btn" aria-label="Remove an adult" onclick="adjust('adults', -1)">−</button>
+            <span class="counter-val" id="adults-val" aria-live="polite">2</span>
+            <button type="button" class="counter-btn" aria-label="Add an adult" onclick="adjust('adults', 1)">+</button>
           </div>
         </div>
         <div class="traveler-row">
@@ -796,19 +822,19 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
             <div class="traveler-sub">Under 18</div>
           </div>
           <div class="counter">
-            <button class="counter-btn" onclick="adjust('children', -1)">−</button>
-            <span class="counter-val" id="children-val">0</span>
-            <button class="counter-btn" onclick="adjust('children', 1)">+</button>
+            <button type="button" class="counter-btn" aria-label="Remove a child" onclick="adjust('children', -1)">−</button>
+            <span class="counter-val" id="children-val" aria-live="polite">0</span>
+            <button type="button" class="counter-btn" aria-label="Add a child" onclick="adjust('children', 1)">+</button>
           </div>
         </div>
       </div>
       <div class="field-row">
         <div class="field-group">
-          <label>Preferred Travel Date</label>
+          <label for="travel-date">Preferred Travel Date</label>
           <input type="date" id="travel-date">
         </div>
         <div class="field-group">
-          <label>Trip Length</label>
+          <label for="trip-length">Trip Length</label>
           <select id="trip-length">
             <option value="" disabled selected>Select...</option>
             <option>2–3 nights</option>
@@ -821,8 +847,8 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         </div>
       </div>
       <div class="field-group">
-        <label>Estimated Budget</label>
-        <div class="budget-grid">
+        <label id="budget-heading">Estimated Budget</label>
+        <div class="budget-grid" role="radiogroup" aria-labelledby="budget-heading">
           <input type="radio" name="budget" id="b1" value="$1,500 – $3,000" class="budget-option">
           <label for="b1" class="budget-label">
             <div class="budget-amount">$1,500 – $3,000</div>
@@ -856,8 +882,8 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         </div>
       </div>
       <div class="field-group">
-        <label>Special Occasion?</label>
-        <div class="occasion-grid">
+        <label id="occ-heading">Special Occasion?</label>
+        <div class="occasion-grid" role="radiogroup" aria-labelledby="occ-heading">
           <input type="radio" name="occasion" id="occ0" value="None" class="occ-option">
           <label for="occ0" class="occ-label">Just a Vacation</label>
           <input type="radio" name="occasion" id="occ1" value="Birthday" class="occ-option">
@@ -873,8 +899,8 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         </div>
       </div>
       <div class="btn-row">
-        <button class="btn-back" onclick="goTo(2)">← Back</button>
-        <button class="btn-next" onclick="goTo(4)">Continue →</button>
+        <button type="button" class="btn-back" onclick="goTo(2)">← Back</button>
+        <button type="button" class="btn-next" onclick="goTo(4)">Continue →</button>
       </div>
     </div>
 
@@ -886,11 +912,11 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         <p>Share any details, wishes, or questions — the more I know, the better I can plan!</p>
       </div>
       <div class="field-group">
-        <label>Tell Me About Your Dream Trip</label>
+        <label for="notes">Tell Me About Your Dream Trip</label>
         <textarea id="notes" placeholder="E.g. We have two young kids who love princesses, we'd love a character dining experience, we're flexible on dates but prefer weekdays..."></textarea>
       </div>
       <div class="field-group">
-        <label>How Did You Hear About Us?</label>
+        <label for="referral">How Did You Hear About Us?</label>
         <select id="referral">
           <option value="" disabled selected>Select one...</option>
           <option>Google Search</option>
@@ -902,10 +928,10 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
         </select>
       </div>
       <div class="btn-row">
-        <button class="btn-back" onclick="goTo(3)">← Back</button>
-        <button class="btn-next" id="submit-btn" onclick="submitForm()">✨ Send My Request</button>
+        <button type="button" class="btn-back" onclick="goTo(3)">← Back</button>
+        <button type="button" class="btn-next" id="submit-btn" onclick="submitForm()">✨ Send My Request</button>
       </div>
-      <div class="error-msg" id="error-msg">Something went wrong. Please try again or email us directly at anthonybia888@gmail.com</div>
+      <div class="error-msg" id="error-msg" role="alert">Something went wrong. Please try again or email me directly at <a href="mailto:anthonybia91@yahoo.com" style="color:#ffd9d6;">anthonybia91@yahoo.com</a></div>
     </div>
 
     <!-- SUCCESS -->
@@ -915,7 +941,7 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
       <div class="success-divider"></div>
       <p>Your vacation request has been received. Anthony will be in touch within 24 hours to start planning your perfect magical getaway.</p>
       <div class="success-detail">
-        📧 A confirmation will be sent to <strong id="success-email">your email</strong>.<br>
+        📧 I'll reply to <strong id="success-email">your email</strong> — check your spam folder just in case.<br>
         📞 Feel free to call anytime: <strong>646-369-7802</strong>
       </div>
       <a href="https://anthonyb888.github.io/index.html" class="btn-home">← Back to Home</a>
@@ -937,13 +963,26 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
     }
   }
 
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function setFieldError(id, show) {
+    const input = document.getElementById(id);
+    input.style.borderColor = show ? '#e74c3c' : '';
+    input.setAttribute('aria-invalid', show ? 'true' : 'false');
+    document.getElementById(id + '-error').classList.toggle('show', show);
+  }
+
   function goTo(step) {
-    // Validate step 1
-    if (step === 2) {
+    // Validate step 1 before leaving it
+    if (step === 2 && document.getElementById('step-1').classList.contains('active')) {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
-      if (!name || !email) {
-        highlight(name, email);
+      const nameBad = !name;
+      const emailBad = !EMAIL_RE.test(email);
+      setFieldError('name', nameBad);
+      setFieldError('email', emailBad);
+      if (nameBad || emailBad) {
+        document.getElementById(nameBad ? 'name' : 'email').focus();
         return;
       }
     }
@@ -959,22 +998,12 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function highlight(name, email) {
-    if (!name) document.getElementById('name').style.borderColor = '#e74c3c';
-    else document.getElementById('name').style.borderColor = '';
-    if (!email) document.getElementById('email').style.borderColor = '#e74c3c';
-    else document.getElementById('email').style.borderColor = '';
-    setTimeout(() => {
-      document.getElementById('name').style.borderColor = '';
-      document.getElementById('email').style.borderColor = '';
-    }, 2000);
-  }
-
   async function submitForm() {
     const name   = document.getElementById('name').value.trim() || 'friend';
     const email  = document.getElementById('email').value.trim() || 'your email';
     const phone  = document.getElementById('phone').value.trim() || 'Not provided';
-    const dest   = document.querySelector('input[name="destination"]:checked')?.value || 'Not selected';
+    const dest   = [...document.querySelectorAll('input[name="destination"]:checked')]
+                     .map(el => el.value).join(', ') || 'Not selected';
     const tDate  = document.getElementById('travel-date').value || 'Not specified';
     const tLen   = document.getElementById('trip-length').value || 'Not specified';
     const budget = document.querySelector('input[name="budget"]:checked')?.value || 'Not selected';
@@ -1046,10 +1075,18 @@ textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
     }
   }
 
-  // Remove red border on input
-  document.querySelectorAll('input, select, textarea').forEach(el => {
-    el.addEventListener('input', () => el.style.borderColor = '');
+  // Clear error state as the user fixes a field
+  ['name', 'email'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => setFieldError(id, false));
   });
+
+  // Pre-select a destination when arriving from a homepage link (?dest=...)
+  const preDest = new URLSearchParams(location.search).get('dest');
+  if (preDest) {
+    document.querySelectorAll('input[name="destination"]').forEach(el => {
+      if (el.value === preDest) el.checked = true;
+    });
+  }
 </script>
 
 </body>
